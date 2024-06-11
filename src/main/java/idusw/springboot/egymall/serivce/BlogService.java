@@ -18,7 +18,7 @@ public interface BlogService {
                 .idx(dto.getWriterIdx())
                 .build();
         BlogEntity entity = BlogEntity.builder()
-                .idx(dto.getBno())
+                .idx(dto.getIdx())
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .views(dto.getViews())
@@ -29,7 +29,7 @@ public interface BlogService {
     // MemberEntity -> : Controller에서는 Member를 다룸
     default BlogDto entityToDto(BlogEntity entity, MemberEntity member) {
         BlogDto dto = BlogDto.builder()
-                .bno(entity.getIdx())
+                .idx(entity.getIdx())
                 .title(entity.getTitle())
                 .views(entity.getViews())
                 .content(entity.getContent())

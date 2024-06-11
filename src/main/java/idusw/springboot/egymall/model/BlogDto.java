@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BlogDto {
-    private Long bno; // no, id, idx, bidx ..
+    private Long idx; // no, id, idx, bidx ..
     private String title;
     private String content;
 
