@@ -3,11 +3,7 @@ spring:
     banner-mode: off
   thymeleaf:
     cache: false
-#  datasource:
-#    url: ${db.url}
-#    username: ${db.username}
-#    password: ${db.password}
-#    driver-class-name: ${db.driver-class-name}
+
   jpa:
     defer-datasource-initialization: true
     open-in-view: false # 트랜잭션 범위 밖에서 영속성 컨텍스트를 유지할지 여부
@@ -19,6 +15,10 @@ spring:
         format_sql: true
     show-sql: true
   datasource:
+    #    url: ${db.url}
+    #    username: ${db.username}
+    #    password: ${db.password}
+    #    driver-class-name: ${db.driver-class-name}
     hikari:
       connection-timeout: 30000  # 커넥션 타임아웃 설정 (ms)
       maximum-pool-size: 10  # 커넥션 풀의 최대 크기 설정
@@ -28,12 +28,12 @@ spring:
       validation-timeout: 5000  # 커넥션 유효성 검사 타임아웃 설정 (ms)
       auto-commit: true  # 자동 커밋 모드 설정
 server:
-  port: 7070
+  port: 8080
   servlet:
     session:
       timeout: 600  # 600초 10분임, 기본값 30분
 db:
-  url: jdbc:mysql://210.102.226.242:8080/db_2024
+  url: jdbc:mysql://localhost:3306/db202012015
   username: root
   password: cometrue
   driver-class-name: com.mysql.cj.jdbc.Driver
