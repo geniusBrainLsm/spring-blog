@@ -5,6 +5,7 @@ import idusw.springboot.egymall.serivce.BlogService;
 import idusw.springboot.egymall.serivce.BlogServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,8 +17,9 @@ import java.util.List;
 public class BlogController {
     private final BlogServiceImpl blogService;
     @GetMapping
-    public String getBlogs(){
+    public String getBlogs(Model model){
         List<BlogDto> blogDtoList = blogService.readList();
+        model.addAttribute("blogs", blogDtoList);
         return "./blogs/list";
     }
 }

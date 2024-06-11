@@ -9,10 +9,37 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+import java.util.stream.IntStream;
+
 @SpringBootTest
 public class BlogServiceTest {
     @Autowired
     BlogRepository blogRepository;
+    @Autowired
+    BlogService blogService;
+
+
+    @Test
+    public void initializeBlogs(){
+        IntStream.rangeClosed(1, 10).forEach(i -> {
+            BlogDto dto = BlogDto.builder()
+                    .title("test" + i)
+                    .content("content" + i)
+                    .writerIdx((long)i)
+                    .block("non")
+                    .build();
+
+            blogRepository.save(dtoToEntity(dto));
+        });
+    }
+    @Test
+    public void getBlogs(){
+        List<BlogDto> blogDtoList = blogService.readList();
+        for(BlogDto dto: blogDtoList){
+            System.out.println(dto.toString());
+        }
+    }
 
     @Test
     public void registerBlog() {
@@ -30,19 +57,19 @@ public class BlogServiceTest {
                 .idx(dto.getWriterIdx())
                 .build();
         BlogEntity entity = BlogEntity.builder()
-                .bno(dto.getBno())
+                .idx(dto.getIdx())
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .block(dto.getBlock())
                 .views(dto.getViews())
-                .writer(member)
+                .blogger(member)
                 .build();
         return entity;
     }
     // MemberEntity -> : Controller에서는 Member를 다룸
     BlogDto entityToDto(BlogEntity entity, MemberEntity member) {
         BlogDto dto = BlogDto.builder()
-                .bno(entity.getBno())
+                .idx(entity.getIdx())
                 .title(entity.getTitle())
                 .views(entity.getViews())
                 .content(entity.getContent())

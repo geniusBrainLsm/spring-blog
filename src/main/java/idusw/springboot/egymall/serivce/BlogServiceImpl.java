@@ -1,13 +1,19 @@
 package idusw.springboot.egymall.serivce;
 
+import idusw.springboot.egymall.entity.BlogEntity;
 import idusw.springboot.egymall.model.BlogDto;
+import idusw.springboot.egymall.repository.BlogRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BlogServiceImpl implements BlogService {
 
+    private final BlogRepository blogRepository;
     @Override
     public int create(BlogDto dto) {
         return 0;
@@ -20,7 +26,11 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<BlogDto> readList() {
-        return null;
+        List<BlogEntity> blogEntityList =  blogRepository.findAll();
+        List<BlogDto> blogDtoList = blogEntityList.stream()
+                .map(blogEntity -> entityToDto(blogEntity, blogEntity.getBlogger()))
+                .collect(Collectors.toList());
+        return blogDtoList;
     }
 
     @Override
