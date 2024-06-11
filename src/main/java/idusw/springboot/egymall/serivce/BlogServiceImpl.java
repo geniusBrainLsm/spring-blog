@@ -1,12 +1,14 @@
 package idusw.springboot.egymall.serivce;
 
 import idusw.springboot.egymall.entity.BlogEntity;
+import idusw.springboot.egymall.entity.MemberEntity;
 import idusw.springboot.egymall.model.BlogDto;
 import idusw.springboot.egymall.repository.BlogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,12 +18,21 @@ public class BlogServiceImpl implements BlogService {
     private final BlogRepository blogRepository;
     @Override
     public int create(BlogDto dto) {
-        return 0;
+        BlogEntity entity = dtoToEntity(dto);
+
+        blogRepository.save(entity);
+        return 1;
+
+        //서비스에서 이거써보ㅓ기ㅏ
     }
 
     @Override
     public BlogDto read(BlogDto dto) {
-        return null;
+        Optional<BlogEntity> blogEntityOptional = blogRepository.findById(dto.getIdx());
+        MemberEntity memberEntity= MemberEntity.builder()
+                .idx(dto.getWriterIdx())
+                .build();
+        return blogEntityOptional.map(blogEntity -> entityToDto(blogEntity, memberEntity)).orElse(null);
     }
 
     @Override
@@ -30,16 +41,21 @@ public class BlogServiceImpl implements BlogService {
         List<BlogDto> blogDtoList = blogEntityList.stream()
                 .map(blogEntity -> entityToDto(blogEntity, blogEntity.getBlogger()))
                 .collect(Collectors.toList());
+        //change to using builder pattern
         return blogDtoList;
     }
 
     @Override
     public int update(BlogDto dto) {
-        return 0;
+        blogRepository.save(dtoToEntity(dto));
+        return 1;
     }
 
     @Override
     public int delete(BlogDto dto) {
-        return 0;
+        blogRepository.delete(dtoToEntity(dto));
+
+
+        return 1;
     }
 }

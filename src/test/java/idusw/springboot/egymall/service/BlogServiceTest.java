@@ -52,6 +52,43 @@ public class BlogServiceTest {
 
         blogRepository.save(dtoToEntity(dto));
     }
+
+    @Test
+    public void UpdateBlog(){
+        int blogIdx=2;
+
+        BlogDto blogDto = BlogDto.builder()
+                .idx((long)blogIdx)
+                .title("updateTitle"+blogIdx)
+                .content("updateContent"+blogIdx)
+                .writerIdx((long)3)
+                .build();
+
+        blogService.update(blogDto);
+        getBlogs();
+    }
+
+
+    @Test
+    public void getBlog() {
+        int idx = 7;
+        BlogDto dto = BlogDto.builder()
+                .idx((long) idx)
+                .build();
+        BlogDto ret = blogService.read(dto);
+        System.out.println(ret.toString());
+    }
+    @Test
+    public void deleteBlog() {
+        int blogIdx = 12;
+        BlogDto blogDto = BlogDto.builder()
+                .idx((long)blogIdx)
+                .build();
+
+        blogService.delete(blogDto);
+        getBlogs();
+
+    }
     BlogEntity dtoToEntity(BlogDto dto) {
         MemberEntity member = MemberEntity.builder()
                 .idx(dto.getWriterIdx())
