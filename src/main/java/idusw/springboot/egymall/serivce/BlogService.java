@@ -3,13 +3,16 @@ package idusw.springboot.egymall.serivce;
 import idusw.springboot.egymall.entity.BlogEntity;
 import idusw.springboot.egymall.entity.MemberEntity;
 import idusw.springboot.egymall.model.BlogDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface BlogService {
     int create(BlogDto dto);
-    BlogDto read(BlogDto dto);
-    List<BlogDto> readList();
+    BlogDto read(Long idx);
+    Page<BlogDto> readList(String title, Pageable pageable);
+    List<BlogDto> readAllList();
     int update(BlogDto dto);
     int delete(BlogDto dto);
 

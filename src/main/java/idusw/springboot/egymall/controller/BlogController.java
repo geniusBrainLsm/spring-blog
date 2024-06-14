@@ -1,25 +1,56 @@
 package idusw.springboot.egymall.controller;
 
 import idusw.springboot.egymall.model.BlogDto;
+import idusw.springboot.egymall.model.MemberDto;
 import idusw.springboot.egymall.serivce.BlogService;
 import idusw.springboot.egymall.serivce.BlogServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("blogs/")
-@RequiredArgsConstructor
 public class BlogController {
-    private final BlogServiceImpl blogService;
-    @GetMapping
-    public String getBlogs(Model model){
-        List<BlogDto> blogDtoList = blogService.readList();
+
+    private final BlogService blogService;
+
+    public BlogController(BlogService blogService) {
+        this.blogService = blogService;
+    }
+
+    @GetMapping("/blogs")
+    public String getBlogs(Model model,
+                           @RequestParam(required = false) String title,
+                           @RequestParam(required = false) Integer page,
+                           @RequestParam(required = false) Integer size) {
+
+        // 무한리디렉션뜸
+        if (page == null || size == null) {
+            page = (page == null) ? 0 : page;
+            size = (size == null) ? 10 : size;
+            return "redirect:/blogs?page=" + page + "&size=" + size + "&title=" + (title != null ? title : "");
+        }
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<BlogDto> blogDtoList = blogService.readList(title, pageable);
         model.addAttribute("blogs", blogDtoList);
-        return "./blogs/list";
+        model.addAttribute("title", title != null ? title : "");
+
+        return "blogs/list";
+    }
+
+    @GetMapping("{idx}")
+    public String getBlogById(@PathVariable("idx") Long idx, Model model) {
+        BlogDto blogDto = blogService.read(idx);
+        model.addAttribute("blogDto", blogDto);
+        return "./blogs/detail";
     }
 }

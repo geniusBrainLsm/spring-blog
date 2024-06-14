@@ -8,6 +8,7 @@ import idusw.springboot.egymall.serivce.BlogService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -35,7 +36,7 @@ public class BlogServiceTest {
     }
     @Test
     public void getBlogs(){
-        List<BlogDto> blogDtoList = blogService.readList();
+        List<BlogDto> blogDtoList = blogService.readAllList();
         for(BlogDto dto: blogDtoList){
             System.out.println(dto.toString());
         }
@@ -71,11 +72,11 @@ public class BlogServiceTest {
 
     @Test
     public void getBlog() {
-        int idx = 7;
+        long idx = 7L;
         BlogDto dto = BlogDto.builder()
                 .idx((long) idx)
                 .build();
-        BlogDto ret = blogService.read(dto);
+        BlogDto ret = blogService.read(idx);
         System.out.println(ret.toString());
     }
     @Test

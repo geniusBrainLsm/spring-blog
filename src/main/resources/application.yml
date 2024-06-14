@@ -35,5 +35,5 @@ server:
 db:
   url: jdbc:mysql://localhost:3306/db202012015
   username: root
-  password: cometrue
+  password: 1234
   driver-class-name: com.mysql.cj.jdbc.Driver
