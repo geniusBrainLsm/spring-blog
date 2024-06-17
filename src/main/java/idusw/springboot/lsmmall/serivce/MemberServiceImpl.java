@@ -3,7 +3,9 @@ package idusw.springboot.lsmmall.serivce;
 import idusw.springboot.lsmmall.entity.MemberEntity;
 import idusw.springboot.lsmmall.model.MemberDto;
 import idusw.springboot.lsmmall.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.Optional;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-    final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
     public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
@@ -45,12 +47,14 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int update(MemberDto memberDto) {
-        return 0;
+        MemberEntity memberEntity = dtoToEntity(memberDto);
+        memberRepository.save(memberEntity);
+        return 1;
     }
-
     @Override
-    public int delete(MemberDto memberDto) {
-        return 0;
+    public int delete(@PathVariable("idx") Long idx) {
+        memberRepository.deleteById(idx);
+        return 1;
     }
 
     @Override

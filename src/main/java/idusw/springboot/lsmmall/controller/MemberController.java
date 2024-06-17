@@ -85,4 +85,19 @@ public class MemberController {
             return "./errors/error-message";
     }
 
+    @PostMapping("update")
+    public String postUpdate(@ModelAttribute("memberDto") MemberDto memberDto, Model model) {
+        if(memberService.update(memberDto) > 0) {
+            return "redirect:/members/" + memberDto.getIdx();
+        } else {
+            return "./errors/error-message";
+        }
+    }
+
+    @GetMapping("delete/{idx}")
+    public String deleteMember(@PathVariable("idx") Long idx) {
+        memberService.delete(idx);
+        return "redirect:/members";
+    }
+
 }

@@ -7,6 +7,27 @@
 		<title>Member Info</title>
 		<div th:replace="~{/main/fragments :: head}"></div>
 	</head>
+	<style>
+		.button-container {
+			display: flex;
+			gap: 10px; /* 버튼 사이의 간격을 설정 */
+		}
+		.btn {
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+		.btn-update {
+			background-color: #4CAF50;
+			color: white;
+		}
+		.btn-delete {
+			background-color: #f44336;
+			color: white;
+		}
+	</style>
 	<body>
 		<div th:replace="~{/main/fragments :: header}"></div>
 		<div th:replace="~{/main/fragments :: right-sidebar}"></div>
@@ -98,25 +119,38 @@
 								</p>
 								<div class="profile-info">
 									<h5 class="mb-20 h5 text-blue">Contact Information</h5>
-									<ul>
-										<li>
-											<span>Email Address:</span>
-											[[${dto.email}]]
-										</li>
-										<li>
-											<span>Phone Number:</span>
-											619-229-0054
-										</li>
-										<li>
-											<span>Country:</span>
-											America
-										</li>
-										<li>
-											<span>Address:</span>
-											1807 Holden Street<br />
-											San Diego, CA 92115
-										</li>
-									</ul>
+									<form action="/members/update" method="post">
+										<input type="hidden" name="idx" th:value="${dto.idx}" />
+										<ul>
+											<li>
+												<span>Email Address:</span>
+												<input type="text" name="email" th:value="${dto.email}" />
+											</li>
+											<li>
+												<span>Name:</span>
+												<input type="text" name="name" th:value="${dto.name}" />
+											</li>
+											<li>
+												<span>Id:</span>
+												<input type="text" name="id" th:value="${dto.id}" readonly />
+											</li>
+											<li>
+												<span>PassWord:</span>
+												<input type="password" name="pw" th:value="${dto.pw}" />
+											</li>
+										</ul>
+										<div class="button-container">
+											<button type="submit" class="btn btn-update">Update</button>
+											<button type="button" class="btn btn-delete" onclick="deleteMember(${dto.idx})">Delete</button>
+										</div>
+									</form>
+									<script th:inline="javascript">
+										function deleteMember(idx) {
+											if (confirm("정말 삭제하시겠습니까?")) {
+												window.location.href = /*[[@{/members/delete/}]]*/ + idx;
+											}
+										}
+									</script>
 								</div>
 								<div class="profile-social">
 									<h5 class="mb-20 h5 text-blue">Social Links</h5>
@@ -1195,7 +1229,7 @@
 				target="_blank"
 				class="btn btn-success btn-sm mb-0 mb-md-3 w-100"
 			>
-				DOWNLOAD
+				정보 수정
 				<i class="fa fa-download"></i>
 			</a>
 			<p class="font-14 text-center mb-1 d-none d-md-block">

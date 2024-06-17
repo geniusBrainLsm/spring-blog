@@ -10,7 +10,7 @@ public interface MemberService {
     MemberDto readByIdx(Long idx);
     List<MemberDto> readAll();
     int update(MemberDto memberDto);
-    int delete(MemberDto memberDto);
+    int delete(Long idx);
 
     MemberDto loginById(MemberDto memberDto); // id / pw 활용
 

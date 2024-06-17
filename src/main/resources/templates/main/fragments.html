@@ -397,9 +397,9 @@
     <div class="left-side-bar">
         <div class="brand-logo">
             <a href="../">
-                <img src="../vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
+                <img src="../vendors/images/lsmLogo.png" alt="" class="dark-logo" />
                 <img
-                        src="../vendors/images/deskapp-logo-white.svg"
+                        src="../vendors/images/lsmLogo.png"
                         alt=""
                         class="light-logo"
                 />
@@ -411,10 +411,10 @@
         <div class="menu-block customscroll">
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
-                    <li>
+                    <li th:if="${session.id != null}">
                         <a href="./members/" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-calendar4-week"></span
-                                ><span class="mtext">Member List</span>
+                            <span class="micon bi bi-calendar4-week"></span>
+                            <span class="mtext">Member List</span>
                         </a>
                     </li>
 
