@@ -20,10 +20,17 @@ public class BlogEntity extends BaseEntity {
     @Column(length = 200, nullable = false) // nullable = false 경우는 null 넣으면 오류 발생
     private String content;
     @Column
-    private Long views;
+    private Long views = 0L;
     @Column(length = 20)
     private String block;
     // Association
     @ManyToOne(fetch = FetchType.LAZY) // 1 Blogger(Member)가 여러개의 블로그를 작성할 수 있는 관계
     private MemberEntity blogger;
+
+    public void incrementViews() {
+        if (this.views == null) {
+            this.views = 0L;
+        }
+        this.views++;
+    }
 }

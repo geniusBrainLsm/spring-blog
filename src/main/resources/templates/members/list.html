@@ -82,11 +82,11 @@
 							</thead>
 							<tbody>
 							<tr th:each="member : ${dtoList}">
-								<th scope="row" th:text="${member.idx}">1</th>
-								<td th:text="${member.email}">Mark</td>
-								<td th:text="${member.id}">Otto</td>
-								<td th:text="${member.name}">@mdo</td>
+								<th scope="row" th:text="${member.idx}"></th>
+								<td th:text="${member.email}"></td>
 								<td th:text="${member.id}"></td>
+								<td th:text="${member.name}"></td>
+								<td th:text="${member.pw}"></td>
 							</tr>
 							</tbody>
 						</table>

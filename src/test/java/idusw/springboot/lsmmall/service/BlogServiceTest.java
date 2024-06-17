@@ -3,8 +3,12 @@ package idusw.springboot.lsmmall.service;
 import idusw.springboot.lsmmall.entity.BlogEntity;
 import idusw.springboot.lsmmall.entity.MemberEntity;
 import idusw.springboot.lsmmall.model.BlogDto;
+import idusw.springboot.lsmmall.model.MemberDto;
 import idusw.springboot.lsmmall.repository.BlogRepository;
+import idusw.springboot.lsmmall.repository.MemberRepository;
 import idusw.springboot.lsmmall.serivce.BlogService;
+import idusw.springboot.lsmmall.serivce.MemberService;
+import idusw.springboot.lsmmall.serivce.MemberServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,19 +22,28 @@ public class BlogServiceTest {
     BlogRepository blogRepository;
     @Autowired
     BlogService blogService;
+    @Autowired
+    MemberRepository memberRepository;
+    @Autowired
+    MemberServiceImpl memberService;
 
 
     @Test
-    public void initializeBlogs(){
+    public void initializeBlogs() {
         IntStream.rangeClosed(1, 10).forEach(i -> {
-            BlogDto dto = BlogDto.builder()
-                    .title("test" + i)
-                    .content("content" + i)
-                    .writerIdx((long)i)
-                    .block("non")
-                    .build();
+            MemberDto member = memberService.readByIdx((long) i);
+            if (member != null) {
+                BlogDto dto = BlogDto.builder()
+                        .title("test" + i)
+                        .content("content" + i)
+                        .writerIdx(member.getIdx())
+                        .block("non")
+                        .build();
 
-            blogRepository.save(dtoToEntity(dto));
+                blogRepository.save(dtoToEntity(dto));
+            } else {
+                System.out.println("Member with index " + i + " not found.");
+            }
         });
     }
     @Test

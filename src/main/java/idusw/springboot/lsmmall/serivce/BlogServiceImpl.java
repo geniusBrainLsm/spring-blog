@@ -32,6 +32,9 @@ public class BlogServiceImpl implements BlogService {
     public BlogDto read(Long idx) {
         BlogEntity blogEntity = blogRepository.findById(idx)
                 .orElseThrow(() -> new RuntimeException("Blog not found"));
+        //조회수증가
+        blogEntity.incrementViews();
+        blogRepository.save(blogEntity);
 
         MemberEntity memberEntity = memberRepository.findById(blogEntity.getBlogger().getIdx())
                 .orElseThrow(() -> new RuntimeException("Member not found"));

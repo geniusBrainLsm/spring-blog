@@ -58,7 +58,7 @@
 															<span th:text="${dto.content}"></span>
 														</p>
 														<div class="pt-10">
-															<a href="./detail" class="btn btn-outline-primary">Read More</a>
+															<a th:href="@{'/blogs/' + ${dto.idx}}" class="btn btn-outline-primary">Read More</a>
 														</div>
 													</div>
 												</div>
@@ -67,7 +67,7 @@
 									</li>
 								</ul>
 							</div>
-							<div class="blog-pagination">
+							<div class="blog-pagination" th:if="${blogs.totalPages > 0}">
 								<div class="btn-toolbar justify-content-center mb-15">
 									<div class="btn-group">
 										<a th:if="${blogs.hasPrevious()}"
@@ -77,7 +77,7 @@
 										</a>
 										<a th:each="i : ${#numbers.sequence(0, blogs.totalPages - 1)}"
 										   th:classappend="${i == blogs.number} ? ' btn-primary' : ' btn-outline-primary'"
-										   th:href="@{'/blogs?page=' + ${i} + '&size=' + ${blogs.size} + '&title=' + ${title}}"
+										   th:href="@{'/blogs?page=' + (${i}) + '&size=' + ${blogs.size} + '&title=' + ${title}}"
 										   class="btn">
 											<span th:text="${i + 1}">1</span>
 										</a>
@@ -89,6 +89,7 @@
 									</div>
 								</div>
 							</div>
+
 
 
 						</div>
