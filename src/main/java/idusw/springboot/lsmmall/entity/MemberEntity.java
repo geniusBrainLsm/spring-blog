@@ -26,9 +26,9 @@ public class MemberEntity extends BaseEntity {
     @Column(length = 30, nullable = false)
     private String email;
 
-    @Column(length =15, nullable = false)
+    @Column(length =15, nullable = true)
     private String phone;
 
-    @Column(length =244, nullable = false)
+    @Column(length =244, nullable = true)
     private String address;
 }
