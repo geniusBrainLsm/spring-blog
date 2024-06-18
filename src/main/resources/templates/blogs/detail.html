@@ -59,6 +59,15 @@
 												<span th:text="${blogDto.content}"></span>
 
 											</p>
+											<div class="mt-3">
+												<form th:action="@{/blogs/edit/{idx}(idx=${blogDto.idx})}" method="get" style="display: inline;">
+													<button type="submit" class="btn btn-primary">수정하기</button>
+												</form>
+												<form th:action="@{/blogs/delete/{idx}(idx=${blogDto.idx})}" method="post" style="display: inline;">
+													<input type="hidden" name="_method" value="delete">
+													<button type="submit" class="btn btn-danger">삭제하기</button>
+												</form>
+											</div>
 <!--											<h5 class="mb-10">-->
 <!--												Lorem ipsum dolor sit amet, consectetur.-->
 <!--											</h5>-->

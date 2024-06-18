@@ -47,4 +47,11 @@ public class BlogController {
         model.addAttribute("blogDto", blogDto);
         return "./blogs/detail";
     }
+
+    @GetMapping("/blogs/edit/{idx}")
+    public String addBlogs(@PathVariable("idx") Long idx, Model model){
+        BlogDto blogDto = blogService.read(idx);
+        model.addAttribute("blogDto", blogDto);
+        return "./blogs/edit";
+    }
 }

@@ -1,8 +1,12 @@
 package idusw.springboot.lsmmall.controller;
 
 import idusw.springboot.lsmmall.model.MemberDto;
+import idusw.springboot.lsmmall.repository.BlogRepository;
+import idusw.springboot.lsmmall.repository.MemberRepository;
 import idusw.springboot.lsmmall.serivce.MemberService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,14 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("members/")
 public class MemberController {
 
     final MemberService memberService;
-    public MemberController(MemberService memberService) { // 생성자 주입
-        this.memberService = memberService;
-    }
-
+    private final MemberRepository memberRepository;
+    private final BlogRepository blogRepository;
     @GetMapping("logout")
     public String getLogout(HttpSession session) {
         session.invalidate();
@@ -95,9 +98,13 @@ public class MemberController {
     }
 
     @GetMapping("delete/{idx}")
+    @Transactional
     public String deleteMember(@PathVariable("idx") Long idx) {
+
+        blogRepository.deleteByBloggerIdx(idx);
+
         memberService.delete(idx);
-        return "redirect:/members";
+        return "redirect:/";
     }
 
 }

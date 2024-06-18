@@ -408,7 +408,7 @@
                 <i class="ion-close-round"></i>
             </div>
         </div>
-        <div class="menu-block customscroll">
+        <div class="customscroll">
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
                     <li th:if="${session.id != null}">
@@ -420,7 +420,7 @@
 
 
                     <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
+                        <a class="dropdown-toggle">
 								<span class="micon bi bi-back"></span
                                 ><span class="mtext">Extra Pages</span>
                         </a>
@@ -430,7 +430,6 @@
                         <ul class="submenu">
                             <li><a href="/product">Products</a></li>
                         </ul>
-
                     </li>
                     <li>
                         <a href="invoice.html" class="dropdown-toggle no-arrow">

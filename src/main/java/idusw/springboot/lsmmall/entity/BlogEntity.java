@@ -25,6 +25,7 @@ public class BlogEntity extends BaseEntity {
     private String block;
     // Association
     @ManyToOne(fetch = FetchType.LAZY) // 1 Blogger(Member)가 여러개의 블로그를 작성할 수 있는 관계
+    @JoinColumn(name = "blogger_idx")
     private MemberEntity blogger;
 
     public void incrementViews() {

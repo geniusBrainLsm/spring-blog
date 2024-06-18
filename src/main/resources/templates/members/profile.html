@@ -10,12 +10,13 @@
 	<style>
 		.button-container {
 			display: flex;
-			gap: 10px; /* 버튼 사이의 간격을 설정 */
+			gap: 10px;
+			padding-top: 10px;
 		}
 		.btn {
 			padding: 10px 20px;
 			border: none;
-			border-radius: 5px;
+			border-radius: 8px;
 			cursor: pointer;
 			font-size: 16px;
 		}
@@ -57,7 +58,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row justify-content-center" style="height: 100vh;">
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
 							<div class="pd-20 card-box height-100-p">
 								<div class="profile-photo">
@@ -141,115 +142,128 @@
 										</ul>
 										<div class="button-container">
 											<button type="submit" class="btn btn-update">Update</button>
-											<button type="button" class="btn btn-delete" onclick="deleteMember(${dto.idx})">Delete</button>
+											<button type="button" class="btn btn-delete" th:onclick="'deleteMember(' + ${dto.idx} + ')'">Delete</button>
+
+
 										</div>
 									</form>
-									<script th:inline="javascript">
-										function deleteMember(idx) {
-											if (confirm("정말 삭제하시겠습니까?")) {
-												window.location.href = /*[[@{/members/delete/}]]*/ + idx;
-											}
+
+								</div>
+								<script>
+									function deleteMember(idx) {
+										if (confirm('계정 삭제시 작성된 블로그도 모두 삭제됩니다.')) {
+											const form = document.createElement('form');
+											form.method = 'delete';
+											form.action = `/members/delete/${idx}`;
+
+											const hiddenField = document.createElement('input');
+											hiddenField.type = 'hidden';
+											hiddenField.name = 'idx';
+
+											form.appendChild(hiddenField);
+											document.body.appendChild(form);
+											form.submit();
 										}
-									</script>
-								</div>
-								<div class="profile-social">
-									<h5 class="mb-20 h5 text-blue">Social Links</h5>
-									<ul class="clearfix">
-										<li>
-											<a
-												href="#"
-												class="btn"
-												data-bgcolor="#3b5998"
-												data-color="#ffffff"
-												><i class="fa fa-facebook"></i
-											></a>
-										</li>
-										<li>
-											<a
-												href="#"
-												class="btn"
-												data-bgcolor="#1da1f2"
-												data-color="#ffffff"
-												><i class="fa fa-twitter"></i
-											></a>
-										</li>
-										<li>
-											<a
-												href="#"
-												class="btn"
-												data-bgcolor="#007bb5"
-												data-color="#ffffff"
-												><i class="fa fa-linkedin"></i
-											></a>
-										</li>
-										<li>
-											<a
-												href="#"
-												class="btn"
-												data-bgcolor="#f46f30"
-												data-color="#ffffff"
-												><i class="fa fa-instagram"></i
-											></a>
-										</li>
-										<li>
-											<a
-												href="#"
-												class="btn"
-												data-bgcolor="#c32361"
-												data-color="#ffffff"
-												><i class="fa fa-dribbble"></i
-											></a>
-										</li>
-										<li>
-											<a
-												href="#"
-												class="btn"
-												data-bgcolor="#3d464d"
-												data-color="#ffffff"
-												><i class="fa fa-dropbox"></i
-											></a>
-										</li>
-										<li>
-											<a
-												href="#"
-												class="btn"
-												data-bgcolor="#db4437"
-												data-color="#ffffff"
-												><i class="fa fa-google-plus"></i
-											></a>
-										</li>
-										<li>
-											<a
-												href="#"
-												class="btn"
-												data-bgcolor="#bd081c"
-												data-color="#ffffff"
-												><i class="fa fa-pinterest-p"></i
-											></a>
-										</li>
-										<li>
-											<a
-												href="#"
-												class="btn"
-												data-bgcolor="#00aff0"
-												data-color="#ffffff"
-												><i class="fa fa-skype"></i
-											></a>
-										</li>
-										<li>
-											<a
-												href="#"
-												class="btn"
-												data-bgcolor="#00b489"
-												data-color="#ffffff"
-												><i class="fa fa-vine"></i
-											></a>
-										</li>
-									</ul>
-								</div>
+									}
+								</script>
+<!--								<div class="profile-social">-->
+<!--									<h5 class="mb-20 h5 text-blue">Social Links</h5>-->
+<!--									<ul class="clearfix">-->
+<!--										<li>-->
+<!--											<a-->
+<!--												href="#"-->
+<!--												class="btn"-->
+<!--												data-bgcolor="#3b5998"-->
+<!--												data-color="#ffffff"-->
+<!--												><i class="fa fa-facebook"></i-->
+<!--											></a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<a-->
+<!--												href="#"-->
+<!--												class="btn"-->
+<!--												data-bgcolor="#1da1f2"-->
+<!--												data-color="#ffffff"-->
+<!--												><i class="fa fa-twitter"></i-->
+<!--											></a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<a-->
+<!--												href="#"-->
+<!--												class="btn"-->
+<!--												data-bgcolor="#007bb5"-->
+<!--												data-color="#ffffff"-->
+<!--												><i class="fa fa-linkedin"></i-->
+<!--											></a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<a-->
+<!--												href="#"-->
+<!--												class="btn"-->
+<!--												data-bgcolor="#f46f30"-->
+<!--												data-color="#ffffff"-->
+<!--												><i class="fa fa-instagram"></i-->
+<!--											></a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<a-->
+<!--												href="#"-->
+<!--												class="btn"-->
+<!--												data-bgcolor="#c32361"-->
+<!--												data-color="#ffffff"-->
+<!--												><i class="fa fa-dribbble"></i-->
+<!--											></a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<a-->
+<!--												href="#"-->
+<!--												class="btn"-->
+<!--												data-bgcolor="#3d464d"-->
+<!--												data-color="#ffffff"-->
+<!--												><i class="fa fa-dropbox"></i-->
+<!--											></a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<a-->
+<!--												href="#"-->
+<!--												class="btn"-->
+<!--												data-bgcolor="#db4437"-->
+<!--												data-color="#ffffff"-->
+<!--												><i class="fa fa-google-plus"></i-->
+<!--											></a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<a-->
+<!--												href="#"-->
+<!--												class="btn"-->
+<!--												data-bgcolor="#bd081c"-->
+<!--												data-color="#ffffff"-->
+<!--												><i class="fa fa-pinterest-p"></i-->
+<!--											></a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<a-->
+<!--												href="#"-->
+<!--												class="btn"-->
+<!--												data-bgcolor="#00aff0"-->
+<!--												data-color="#ffffff"-->
+<!--												><i class="fa fa-skype"></i-->
+<!--											></a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<a-->
+<!--												href="#"-->
+<!--												class="btn"-->
+<!--												data-bgcolor="#00b489"-->
+<!--												data-color="#ffffff"-->
+<!--												><i class="fa fa-vine"></i-->
+<!--											></a>-->
+<!--										</li>-->
+<!--									</ul>-->
+<!--								</div>-->
 								<div class="profile-skills">
 									<h5 class="mb-20 h5 text-blue">Key Skills</h5>
-									<h6 class="mb-5 font-14">HTML</h6>
+									<h6 class="mb-5 font-14">Java</h6>
 									<div class="progress mb-20" style="height: 6px">
 										<div
 											class="progress-bar"
@@ -260,7 +274,7 @@
 											aria-valuemax="100"
 										></div>
 									</div>
-									<h6 class="mb-5 font-14">Css</h6>
+									<h6 class="mb-5 font-14">Spring</h6>
 									<div class="progress mb-20" style="height: 6px">
 										<div
 											class="progress-bar"
@@ -271,7 +285,7 @@
 											aria-valuemax="100"
 										></div>
 									</div>
-									<h6 class="mb-5 font-14">jQuery</h6>
+									<h6 class="mb-5 font-14">JS</h6>
 									<div class="progress mb-20" style="height: 6px">
 										<div
 											class="progress-bar"
@@ -296,953 +310,953 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30">
-							<div class="card-box height-100-p overflow-hidden">
-								<div class="profile-tab height-100-p">
-									<div class="tab height-100-p">
-										<ul class="nav nav-tabs customtab" role="tablist">
-											<li class="nav-item">
-												<a
-													class="nav-link active"
-													data-toggle="tab"
-													href="#timeline"
-													role="tab"
-													>Timeline</a
-												>
-											</li>
-											<li class="nav-item">
-												<a
-													class="nav-link"
-													data-toggle="tab"
-													href="#tasks"
-													role="tab"
-													>Tasks</a
-												>
-											</li>
-											<li class="nav-item">
-												<a
-													class="nav-link"
-													data-toggle="tab"
-													href="#setting"
-													role="tab"
-													>Settings</a
-												>
-											</li>
-										</ul>
-										<div class="tab-content">
-											<!-- Timeline Tab start -->
-											<div
-												class="tab-pane fade show active"
-												id="timeline"
-												role="tabpanel"
-											>
-												<div class="pd-20">
-													<div class="profile-timeline">
-														<div class="timeline-month">
-															<h5>August, 2020</h5>
-														</div>
-														<div class="profile-timeline-list">
-															<ul>
-																<li>
-																	<div class="date">12 Aug</div>
-																	<div class="task-name">
-																		<i class="ion-android-alarm-clock"></i> Task
-																		Added
-																	</div>
-																	<p>
-																		Lorem ipsum dolor sit amet, consectetur
-																		adipisicing elit.
-																	</p>
-																	<div class="task-time">09:30 am</div>
-																</li>
-																<li>
-																	<div class="date">10 Aug</div>
-																	<div class="task-name">
-																		<i class="ion-ios-chatboxes"></i> Task Added
-																	</div>
-																	<p>
-																		Lorem ipsum dolor sit amet, consectetur
-																		adipisicing elit.
-																	</p>
-																	<div class="task-time">09:30 am</div>
-																</li>
-																<li>
-																	<div class="date">10 Aug</div>
-																	<div class="task-name">
-																		<i class="ion-ios-clock"></i> Event Added
-																	</div>
-																	<p>
-																		Lorem ipsum dolor sit amet, consectetur
-																		adipisicing elit.
-																	</p>
-																	<div class="task-time">09:30 am</div>
-																</li>
-																<li>
-																	<div class="date">10 Aug</div>
-																	<div class="task-name">
-																		<i class="ion-ios-clock"></i> Event Added
-																	</div>
-																	<p>
-																		Lorem ipsum dolor sit amet, consectetur
-																		adipisicing elit.
-																	</p>
-																	<div class="task-time">09:30 am</div>
-																</li>
-															</ul>
-														</div>
-														<div class="timeline-month">
-															<h5>July, 2020</h5>
-														</div>
-														<div class="profile-timeline-list">
-															<ul>
-																<li>
-																	<div class="date">12 July</div>
-																	<div class="task-name">
-																		<i class="ion-android-alarm-clock"></i> Task
-																		Added
-																	</div>
-																	<p>
-																		Lorem ipsum dolor sit amet, consectetur
-																		adipisicing elit.
-																	</p>
-																	<div class="task-time">09:30 am</div>
-																</li>
-																<li>
-																	<div class="date">10 July</div>
-																	<div class="task-name">
-																		<i class="ion-ios-chatboxes"></i> Task Added
-																	</div>
-																	<p>
-																		Lorem ipsum dolor sit amet, consectetur
-																		adipisicing elit.
-																	</p>
-																	<div class="task-time">09:30 am</div>
-																</li>
-															</ul>
-														</div>
-														<div class="timeline-month">
-															<h5>June, 2020</h5>
-														</div>
-														<div class="profile-timeline-list">
-															<ul>
-																<li>
-																	<div class="date">12 June</div>
-																	<div class="task-name">
-																		<i class="ion-android-alarm-clock"></i> Task
-																		Added
-																	</div>
-																	<p>
-																		Lorem ipsum dolor sit amet, consectetur
-																		adipisicing elit.
-																	</p>
-																	<div class="task-time">09:30 am</div>
-																</li>
-																<li>
-																	<div class="date">10 June</div>
-																	<div class="task-name">
-																		<i class="ion-ios-chatboxes"></i> Task Added
-																	</div>
-																	<p>
-																		Lorem ipsum dolor sit amet, consectetur
-																		adipisicing elit.
-																	</p>
-																	<div class="task-time">09:30 am</div>
-																</li>
-																<li>
-																	<div class="date">10 June</div>
-																	<div class="task-name">
-																		<i class="ion-ios-clock"></i> Event Added
-																	</div>
-																	<p>
-																		Lorem ipsum dolor sit amet, consectetur
-																		adipisicing elit.
-																	</p>
-																	<div class="task-time">09:30 am</div>
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!-- Timeline Tab End -->
-											<!-- Tasks Tab start -->
-											<div class="tab-pane fade" id="tasks" role="tabpanel">
-												<div class="pd-20 profile-task-wrap">
-													<div class="container pd-0">
-														<!-- Open Task start -->
-														<div class="task-title row align-items-center">
-															<div class="col-md-8 col-sm-12">
-																<h5>Open Tasks (4 Left)</h5>
-															</div>
-															<div class="col-md-4 col-sm-12 text-right">
-																<a
-																	href="task-add"
-																	data-toggle="modal"
-																	data-target="#task-add"
-																	class="bg-light-blue btn text-blue weight-500"
-																	><i class="ion-plus-round"></i> Add</a
-																>
-															</div>
-														</div>
-														<div class="profile-task-list pb-30">
-															<ul>
-																<li>
-																	<div
-																		class="custom-control custom-checkbox mb-5"
-																	>
-																		<input
-																			type="checkbox"
-																			class="custom-control-input"
-																			id="task-1"
-																		/>
-																		<label
-																			class="custom-control-label"
-																			for="task-1"
-																		></label>
-																	</div>
-																	<div class="task-type">Email</div>
-																	Lorem ipsum dolor sit amet, consectetur
-																	adipisicing elit. Id ea earum.
-																	<div class="task-assign">
-																		Assigned to Ferdinand M.
-																		<div class="due-date">
-																			due date <span>22 February 2019</span>
-																		</div>
-																	</div>
-																</li>
-																<li>
-																	<div
-																		class="custom-control custom-checkbox mb-5"
-																	>
-																		<input
-																			type="checkbox"
-																			class="custom-control-input"
-																			id="task-2"
-																		/>
-																		<label
-																			class="custom-control-label"
-																			for="task-2"
-																		></label>
-																	</div>
-																	<div class="task-type">Email</div>
-																	Lorem ipsum dolor sit amet.
-																	<div class="task-assign">
-																		Assigned to Ferdinand M.
-																		<div class="due-date">
-																			due date <span>22 February 2019</span>
-																		</div>
-																	</div>
-																</li>
-																<li>
-																	<div
-																		class="custom-control custom-checkbox mb-5"
-																	>
-																		<input
-																			type="checkbox"
-																			class="custom-control-input"
-																			id="task-3"
-																		/>
-																		<label
-																			class="custom-control-label"
-																			for="task-3"
-																		></label>
-																	</div>
-																	<div class="task-type">Email</div>
-																	Lorem ipsum dolor sit amet, consectetur
-																	adipisicing elit.
-																	<div class="task-assign">
-																		Assigned to Ferdinand M.
-																		<div class="due-date">
-																			due date <span>22 February 2019</span>
-																		</div>
-																	</div>
-																</li>
-																<li>
-																	<div
-																		class="custom-control custom-checkbox mb-5"
-																	>
-																		<input
-																			type="checkbox"
-																			class="custom-control-input"
-																			id="task-4"
-																		/>
-																		<label
-																			class="custom-control-label"
-																			for="task-4"
-																		></label>
-																	</div>
-																	<div class="task-type">Email</div>
-																	Lorem ipsum dolor sit amet. Id ea earum.
-																	<div class="task-assign">
-																		Assigned to Ferdinand M.
-																		<div class="due-date">
-																			due date <span>22 February 2019</span>
-																		</div>
-																	</div>
-																</li>
-															</ul>
-														</div>
-														<!-- Open Task End -->
-														<!-- Close Task start -->
-														<div class="task-title row align-items-center">
-															<div class="col-md-12 col-sm-12">
-																<h5>Closed Tasks</h5>
-															</div>
-														</div>
-														<div class="profile-task-list close-tasks">
-															<ul>
-																<li>
-																	<div
-																		class="custom-control custom-checkbox mb-5"
-																	>
-																		<input
-																			type="checkbox"
-																			class="custom-control-input"
-																			id="task-close-1"
-																			checked=""
-																			disabled=""
-																		/>
-																		<label
-																			class="custom-control-label"
-																			for="task-close-1"
-																		></label>
-																	</div>
-																	<div class="task-type">Email</div>
-																	Lorem ipsum dolor sit amet, consectetur
-																	adipisicing elit. Id ea earum.
-																	<div class="task-assign">
-																		Assigned to Ferdinand M.
-																		<div class="due-date">
-																			due date <span>22 February 2018</span>
-																		</div>
-																	</div>
-																</li>
-																<li>
-																	<div
-																		class="custom-control custom-checkbox mb-5"
-																	>
-																		<input
-																			type="checkbox"
-																			class="custom-control-input"
-																			id="task-close-2"
-																			checked=""
-																			disabled=""
-																		/>
-																		<label
-																			class="custom-control-label"
-																			for="task-close-2"
-																		></label>
-																	</div>
-																	<div class="task-type">Email</div>
-																	Lorem ipsum dolor sit amet.
-																	<div class="task-assign">
-																		Assigned to Ferdinand M.
-																		<div class="due-date">
-																			due date <span>22 February 2018</span>
-																		</div>
-																	</div>
-																</li>
-																<li>
-																	<div
-																		class="custom-control custom-checkbox mb-5"
-																	>
-																		<input
-																			type="checkbox"
-																			class="custom-control-input"
-																			id="task-close-3"
-																			checked=""
-																			disabled=""
-																		/>
-																		<label
-																			class="custom-control-label"
-																			for="task-close-3"
-																		></label>
-																	</div>
-																	<div class="task-type">Email</div>
-																	Lorem ipsum dolor sit amet, consectetur
-																	adipisicing elit.
-																	<div class="task-assign">
-																		Assigned to Ferdinand M.
-																		<div class="due-date">
-																			due date <span>22 February 2018</span>
-																		</div>
-																	</div>
-																</li>
-																<li>
-																	<div
-																		class="custom-control custom-checkbox mb-5"
-																	>
-																		<input
-																			type="checkbox"
-																			class="custom-control-input"
-																			id="task-close-4"
-																			checked=""
-																			disabled=""
-																		/>
-																		<label
-																			class="custom-control-label"
-																			for="task-close-4"
-																		></label>
-																	</div>
-																	<div class="task-type">Email</div>
-																	Lorem ipsum dolor sit amet. Id ea earum.
-																	<div class="task-assign">
-																		Assigned to Ferdinand M.
-																		<div class="due-date">
-																			due date <span>22 February 2018</span>
-																		</div>
-																	</div>
-																</li>
-															</ul>
-														</div>
-														<!-- Close Task start -->
-														<!-- add task popup start -->
-														<div
-															class="modal fade customscroll"
-															id="task-add"
-															tabindex="-1"
-															role="dialog"
-														>
-															<div
-																class="modal-dialog modal-dialog-centered"
-																role="document"
-															>
-																<div class="modal-content">
-																	<div class="modal-header">
-																		<h5
-																			class="modal-title"
-																			id="exampleModalLongTitle"
-																		>
-																			Tasks Add
-																		</h5>
-																		<button
-																			type="button"
-																			class="close"
-																			data-dismiss="modal"
-																			aria-label="Close"
-																			data-toggle="tooltip"
-																			data-placement="bottom"
-																			title=""
-																			data-original-title="Close Modal"
-																		>
-																			<span aria-hidden="true">&times;</span>
-																		</button>
-																	</div>
-																	<div class="modal-body pd-0">
-																		<div class="task-list-form">
-																			<ul>
-																				<li>
-																					<form>
-																						<div class="form-group row">
-																							<label class="col-md-4"
-																								>Task Type</label
-																							>
-																							<div class="col-md-8">
-																								<input
-																									type="text"
-																									class="form-control"
-																								/>
-																							</div>
-																						</div>
-																						<div class="form-group row">
-																							<label class="col-md-4"
-																								>Task Message</label
-																							>
-																							<div class="col-md-8">
-																								<textarea
-																									class="form-control"
-																								></textarea>
-																							</div>
-																						</div>
-																						<div class="form-group row">
-																							<label class="col-md-4"
-																								>Assigned to</label
-																							>
-																							<div class="col-md-8">
-																								<select
-																									class="selectpicker form-control"
-																									data-style="btn-outline-primary"
-																									title="Not Chosen"
-																									multiple=""
-																									data-selected-text-format="count"
-																									data-count-selected-text="{0} people selected"
-																								>
-																									<option>Ferdinand M.</option>
-																									<option>Don H. Rabon</option>
-																									<option>Ann P. Harris</option>
-																									<option>
-																										Katie D. Verdin
-																									</option>
-																									<option>
-																										Christopher S. Fulghum
-																									</option>
-																									<option>
-																										Matthew C. Porter
-																									</option>
-																								</select>
-																							</div>
-																						</div>
-																						<div class="form-group row mb-0">
-																							<label class="col-md-4"
-																								>Due Date</label
-																							>
-																							<div class="col-md-8">
-																								<input
-																									type="text"
-																									class="form-control date-picker"
-																								/>
-																							</div>
-																						</div>
-																					</form>
-																				</li>
-																				<li>
-																					<a
-																						href="javascript:;"
-																						class="remove-task"
-																						data-toggle="tooltip"
-																						data-placement="bottom"
-																						title=""
-																						data-original-title="Remove Task"
-																						><i class="ion-minus-circled"></i
-																					></a>
-																					<form>
-																						<div class="form-group row">
-																							<label class="col-md-4"
-																								>Task Type</label
-																							>
-																							<div class="col-md-8">
-																								<input
-																									type="text"
-																									class="form-control"
-																								/>
-																							</div>
-																						</div>
-																						<div class="form-group row">
-																							<label class="col-md-4"
-																								>Task Message</label
-																							>
-																							<div class="col-md-8">
-																								<textarea
-																									class="form-control"
-																								></textarea>
-																							</div>
-																						</div>
-																						<div class="form-group row">
-																							<label class="col-md-4"
-																								>Assigned to</label
-																							>
-																							<div class="col-md-8">
-																								<select
-																									class="selectpicker form-control"
-																									data-style="btn-outline-primary"
-																									title="Not Chosen"
-																									multiple=""
-																									data-selected-text-format="count"
-																									data-count-selected-text="{0} people selected"
-																								>
-																									<option>Ferdinand M.</option>
-																									<option>Don H. Rabon</option>
-																									<option>Ann P. Harris</option>
-																									<option>
-																										Katie D. Verdin
-																									</option>
-																									<option>
-																										Christopher S. Fulghum
-																									</option>
-																									<option>
-																										Matthew C. Porter
-																									</option>
-																								</select>
-																							</div>
-																						</div>
-																						<div class="form-group row mb-0">
-																							<label class="col-md-4"
-																								>Due Date</label
-																							>
-																							<div class="col-md-8">
-																								<input
-																									type="text"
-																									class="form-control date-picker"
-																								/>
-																							</div>
-																						</div>
-																					</form>
-																				</li>
-																			</ul>
-																		</div>
-																		<div class="add-more-task">
-																			<a
-																				href="#"
-																				data-toggle="tooltip"
-																				data-placement="bottom"
-																				title=""
-																				data-original-title="Add Task"
-																				><i class="ion-plus-circled"></i> Add
-																				More Task</a
-																			>
-																		</div>
-																	</div>
-																	<div class="modal-footer">
-																		<button
-																			type="button"
-																			class="btn btn-primary"
-																		>
-																			Add
-																		</button>
-																		<button
-																			type="button"
-																			class="btn btn-secondary"
-																			data-dismiss="modal"
-																		>
-																			Close
-																		</button>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<!-- add task popup End -->
-													</div>
-												</div>
-											</div>
-											<!-- Tasks Tab End -->
-											<!-- Setting Tab start -->
-											<div
-												class="tab-pane fade height-100-p"
-												id="setting"
-												role="tabpanel"
-											>
-												<div class="profile-setting">
-													<form>
-														<ul class="profile-edit-list row">
-															<li class="weight-500 col-md-6">
-																<h4 class="text-blue h5 mb-20">
-																	Edit Your Personal Setting
-																</h4>
-																<div class="form-group">
-																	<label>Full Name</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Title</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Email</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="email"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Date of birth</label>
-																	<input
-																		class="form-control form-control-lg date-picker"
-																		type="text"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Gender</label>
-																	<div class="d-flex">
-																		<div
-																			class="custom-control custom-radio mb-5 mr-20"
-																		>
-																			<input
-																				type="radio"
-																				id="customRadio4"
-																				name="customRadio"
-																				class="custom-control-input"
-																			/>
-																			<label
-																				class="custom-control-label weight-400"
-																				for="customRadio4"
-																				>Male</label
-																			>
-																		</div>
-																		<div
-																			class="custom-control custom-radio mb-5"
-																		>
-																			<input
-																				type="radio"
-																				id="customRadio5"
-																				name="customRadio"
-																				class="custom-control-input"
-																			/>
-																			<label
-																				class="custom-control-label weight-400"
-																				for="customRadio5"
-																				>Female</label
-																			>
-																		</div>
-																	</div>
-																</div>
-																<div class="form-group">
-																	<label>Country</label>
-																	<select
-																		class="selectpicker form-control form-control-lg"
-																		data-style="btn-outline-secondary btn-lg"
-																		title="Not Chosen"
-																	>
-																		<option>United States</option>
-																		<option>India</option>
-																		<option>United Kingdom</option>
-																	</select>
-																</div>
-																<div class="form-group">
-																	<label>State/Province/Region</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Postal Code</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Phone Number</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Address</label>
-																	<textarea class="form-control"></textarea>
-																</div>
-																<div class="form-group">
-																	<label>Visa Card Number</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Paypal ID</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																	/>
-																</div>
-																<div class="form-group">
-																	<div
-																		class="custom-control custom-checkbox mb-5"
-																	>
-																		<input
-																			type="checkbox"
-																			class="custom-control-input"
-																			id="customCheck1-1"
-																		/>
-																		<label
-																			class="custom-control-label weight-400"
-																			for="customCheck1-1"
-																			>I agree to receive notification
-																			emails</label
-																		>
-																	</div>
-																</div>
-																<div class="form-group mb-0">
-																	<input
-																		type="submit"
-																		class="btn btn-primary"
-																		value="Update Information"
-																	/>
-																</div>
-															</li>
-															<li class="weight-500 col-md-6">
-																<h4 class="text-blue h5 mb-20">
-																	Edit Social Media links
-																</h4>
-																<div class="form-group">
-																	<label>Facebook URL:</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																		placeholder="Paste your link here"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Twitter URL:</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																		placeholder="Paste your link here"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Linkedin URL:</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																		placeholder="Paste your link here"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Instagram URL:</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																		placeholder="Paste your link here"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Dribbble URL:</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																		placeholder="Paste your link here"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Dropbox URL:</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																		placeholder="Paste your link here"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Google-plus URL:</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																		placeholder="Paste your link here"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Pinterest URL:</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																		placeholder="Paste your link here"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Skype URL:</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																		placeholder="Paste your link here"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Vine URL:</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																		placeholder="Paste your link here"
-																	/>
-																</div>
-																<div class="form-group mb-0">
-																	<input
-																		type="submit"
-																		class="btn btn-primary"
-																		value="Save & Update"
-																	/>
-																</div>
-															</li>
-														</ul>
-													</form>
-												</div>
-											</div>
-											<!-- Setting Tab End -->
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+<!--						<div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30">-->
+<!--							<div class="card-box height-100-p overflow-hidden">-->
+<!--								<div class="profile-tab height-100-p">-->
+<!--									<div class="tab height-100-p">-->
+<!--										<ul class="nav nav-tabs customtab" role="tablist">-->
+<!--											<li class="nav-item">-->
+<!--												<a-->
+<!--													class="nav-link active"-->
+<!--													data-toggle="tab"-->
+<!--													href="#timeline"-->
+<!--													role="tab"-->
+<!--													>Timeline</a-->
+<!--												>-->
+<!--											</li>-->
+<!--											<li class="nav-item">-->
+<!--												<a-->
+<!--													class="nav-link"-->
+<!--													data-toggle="tab"-->
+<!--													href="#tasks"-->
+<!--													role="tab"-->
+<!--													>Tasks</a-->
+<!--												>-->
+<!--											</li>-->
+<!--											<li class="nav-item">-->
+<!--												<a-->
+<!--													class="nav-link"-->
+<!--													data-toggle="tab"-->
+<!--													href="#setting"-->
+<!--													role="tab"-->
+<!--													>Settings</a-->
+<!--												>-->
+<!--											</li>-->
+<!--										</ul>-->
+<!--&lt;!&ndash;										<div class="tab-content">&ndash;&gt;-->
+<!--&lt;!&ndash;											&lt;!&ndash; Timeline Tab start &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;											<div&ndash;&gt;-->
+<!--&lt;!&ndash;												class="tab-pane fade show active"&ndash;&gt;-->
+<!--&lt;!&ndash;												id="timeline"&ndash;&gt;-->
+<!--&lt;!&ndash;												role="tabpanel"&ndash;&gt;-->
+<!--&lt;!&ndash;											>&ndash;&gt;-->
+<!--&lt;!&ndash;												<div class="pd-20">&ndash;&gt;-->
+<!--&lt;!&ndash;													<div class="profile-timeline">&ndash;&gt;-->
+<!--&lt;!&ndash;														<div class="timeline-month">&ndash;&gt;-->
+<!--&lt;!&ndash;															<h5>August, 2020</h5>&ndash;&gt;-->
+<!--&lt;!&ndash;														</div>&ndash;&gt;-->
+<!--&lt;!&ndash;														<div class="profile-timeline-list">&ndash;&gt;-->
+<!--&lt;!&ndash;															<ul>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="date">12 Aug</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-name">&ndash;&gt;-->
+<!--&lt;!&ndash;																		<i class="ion-android-alarm-clock"></i> Task&ndash;&gt;-->
+<!--&lt;!&ndash;																		Added&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<p>&ndash;&gt;-->
+<!--&lt;!&ndash;																		Lorem ipsum dolor sit amet, consectetur&ndash;&gt;-->
+<!--&lt;!&ndash;																		adipisicing elit.&ndash;&gt;-->
+<!--&lt;!&ndash;																	</p>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-time">09:30 am</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="date">10 Aug</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-name">&ndash;&gt;-->
+<!--&lt;!&ndash;																		<i class="ion-ios-chatboxes"></i> Task Added&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<p>&ndash;&gt;-->
+<!--&lt;!&ndash;																		Lorem ipsum dolor sit amet, consectetur&ndash;&gt;-->
+<!--&lt;!&ndash;																		adipisicing elit.&ndash;&gt;-->
+<!--&lt;!&ndash;																	</p>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-time">09:30 am</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="date">10 Aug</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-name">&ndash;&gt;-->
+<!--&lt;!&ndash;																		<i class="ion-ios-clock"></i> Event Added&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<p>&ndash;&gt;-->
+<!--&lt;!&ndash;																		Lorem ipsum dolor sit amet, consectetur&ndash;&gt;-->
+<!--&lt;!&ndash;																		adipisicing elit.&ndash;&gt;-->
+<!--&lt;!&ndash;																	</p>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-time">09:30 am</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="date">10 Aug</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-name">&ndash;&gt;-->
+<!--&lt;!&ndash;																		<i class="ion-ios-clock"></i> Event Added&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<p>&ndash;&gt;-->
+<!--&lt;!&ndash;																		Lorem ipsum dolor sit amet, consectetur&ndash;&gt;-->
+<!--&lt;!&ndash;																		adipisicing elit.&ndash;&gt;-->
+<!--&lt;!&ndash;																	</p>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-time">09:30 am</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;															</ul>&ndash;&gt;-->
+<!--&lt;!&ndash;														</div>&ndash;&gt;-->
+<!--&lt;!&ndash;														<div class="timeline-month">&ndash;&gt;-->
+<!--&lt;!&ndash;															<h5>July, 2020</h5>&ndash;&gt;-->
+<!--&lt;!&ndash;														</div>&ndash;&gt;-->
+<!--&lt;!&ndash;														<div class="profile-timeline-list">&ndash;&gt;-->
+<!--&lt;!&ndash;															<ul>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="date">12 July</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-name">&ndash;&gt;-->
+<!--&lt;!&ndash;																		<i class="ion-android-alarm-clock"></i> Task&ndash;&gt;-->
+<!--&lt;!&ndash;																		Added&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<p>&ndash;&gt;-->
+<!--&lt;!&ndash;																		Lorem ipsum dolor sit amet, consectetur&ndash;&gt;-->
+<!--&lt;!&ndash;																		adipisicing elit.&ndash;&gt;-->
+<!--&lt;!&ndash;																	</p>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-time">09:30 am</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="date">10 July</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-name">&ndash;&gt;-->
+<!--&lt;!&ndash;																		<i class="ion-ios-chatboxes"></i> Task Added&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<p>&ndash;&gt;-->
+<!--&lt;!&ndash;																		Lorem ipsum dolor sit amet, consectetur&ndash;&gt;-->
+<!--&lt;!&ndash;																		adipisicing elit.&ndash;&gt;-->
+<!--&lt;!&ndash;																	</p>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-time">09:30 am</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;															</ul>&ndash;&gt;-->
+<!--&lt;!&ndash;														</div>&ndash;&gt;-->
+<!--&lt;!&ndash;														<div class="timeline-month">&ndash;&gt;-->
+<!--&lt;!&ndash;															<h5>June, 2020</h5>&ndash;&gt;-->
+<!--&lt;!&ndash;														</div>&ndash;&gt;-->
+<!--&lt;!&ndash;														<div class="profile-timeline-list">&ndash;&gt;-->
+<!--&lt;!&ndash;															<ul>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="date">12 June</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-name">&ndash;&gt;-->
+<!--&lt;!&ndash;																		<i class="ion-android-alarm-clock"></i> Task&ndash;&gt;-->
+<!--&lt;!&ndash;																		Added&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<p>&ndash;&gt;-->
+<!--&lt;!&ndash;																		Lorem ipsum dolor sit amet, consectetur&ndash;&gt;-->
+<!--&lt;!&ndash;																		adipisicing elit.&ndash;&gt;-->
+<!--&lt;!&ndash;																	</p>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-time">09:30 am</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="date">10 June</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-name">&ndash;&gt;-->
+<!--&lt;!&ndash;																		<i class="ion-ios-chatboxes"></i> Task Added&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<p>&ndash;&gt;-->
+<!--&lt;!&ndash;																		Lorem ipsum dolor sit amet, consectetur&ndash;&gt;-->
+<!--&lt;!&ndash;																		adipisicing elit.&ndash;&gt;-->
+<!--&lt;!&ndash;																	</p>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-time">09:30 am</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="date">10 June</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-name">&ndash;&gt;-->
+<!--&lt;!&ndash;																		<i class="ion-ios-clock"></i> Event Added&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<p>&ndash;&gt;-->
+<!--&lt;!&ndash;																		Lorem ipsum dolor sit amet, consectetur&ndash;&gt;-->
+<!--&lt;!&ndash;																		adipisicing elit.&ndash;&gt;-->
+<!--&lt;!&ndash;																	</p>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-time">09:30 am</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;															</ul>&ndash;&gt;-->
+<!--&lt;!&ndash;														</div>&ndash;&gt;-->
+<!--&lt;!&ndash;													</div>&ndash;&gt;-->
+<!--&lt;!&ndash;												</div>&ndash;&gt;-->
+<!--&lt;!&ndash;											</div>&ndash;&gt;-->
+<!--&lt;!&ndash;											&lt;!&ndash; Timeline Tab End &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;											&lt;!&ndash; Tasks Tab start &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;											<div class="tab-pane fade" id="tasks" role="tabpanel">&ndash;&gt;-->
+<!--&lt;!&ndash;												<div class="pd-20 profile-task-wrap">&ndash;&gt;-->
+<!--&lt;!&ndash;													<div class="container pd-0">&ndash;&gt;-->
+<!--&lt;!&ndash;														&lt;!&ndash; Open Task start &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;														<div class="task-title row align-items-center">&ndash;&gt;-->
+<!--&lt;!&ndash;															<div class="col-md-8 col-sm-12">&ndash;&gt;-->
+<!--&lt;!&ndash;																<h5>Open Tasks (4 Left)</h5>&ndash;&gt;-->
+<!--&lt;!&ndash;															</div>&ndash;&gt;-->
+<!--&lt;!&ndash;															<div class="col-md-4 col-sm-12 text-right">&ndash;&gt;-->
+<!--&lt;!&ndash;																<a&ndash;&gt;-->
+<!--&lt;!&ndash;																	href="task-add"&ndash;&gt;-->
+<!--&lt;!&ndash;																	data-toggle="modal"&ndash;&gt;-->
+<!--&lt;!&ndash;																	data-target="#task-add"&ndash;&gt;-->
+<!--&lt;!&ndash;																	class="bg-light-blue btn text-blue weight-500"&ndash;&gt;-->
+<!--&lt;!&ndash;																	><i class="ion-plus-round"></i> Add</a&ndash;&gt;-->
+<!--&lt;!&ndash;																>&ndash;&gt;-->
+<!--&lt;!&ndash;															</div>&ndash;&gt;-->
+<!--&lt;!&ndash;														</div>&ndash;&gt;-->
+<!--&lt;!&ndash;														<div class="profile-task-list pb-30">&ndash;&gt;-->
+<!--&lt;!&ndash;															<ul>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="custom-control custom-checkbox mb-5"&ndash;&gt;-->
+<!--&lt;!&ndash;																	>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<input&ndash;&gt;-->
+<!--&lt;!&ndash;																			type="checkbox"&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-input"&ndash;&gt;-->
+<!--&lt;!&ndash;																			id="task-1"&ndash;&gt;-->
+<!--&lt;!&ndash;																		/>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<label&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-label"&ndash;&gt;-->
+<!--&lt;!&ndash;																			for="task-1"&ndash;&gt;-->
+<!--&lt;!&ndash;																		></label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-type">Email</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	Lorem ipsum dolor sit amet, consectetur&ndash;&gt;-->
+<!--&lt;!&ndash;																	adipisicing elit. Id ea earum.&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-assign">&ndash;&gt;-->
+<!--&lt;!&ndash;																		Assigned to Ferdinand M.&ndash;&gt;-->
+<!--&lt;!&ndash;																		<div class="due-date">&ndash;&gt;-->
+<!--&lt;!&ndash;																			due date <span>22 February 2019</span>&ndash;&gt;-->
+<!--&lt;!&ndash;																		</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="custom-control custom-checkbox mb-5"&ndash;&gt;-->
+<!--&lt;!&ndash;																	>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<input&ndash;&gt;-->
+<!--&lt;!&ndash;																			type="checkbox"&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-input"&ndash;&gt;-->
+<!--&lt;!&ndash;																			id="task-2"&ndash;&gt;-->
+<!--&lt;!&ndash;																		/>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<label&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-label"&ndash;&gt;-->
+<!--&lt;!&ndash;																			for="task-2"&ndash;&gt;-->
+<!--&lt;!&ndash;																		></label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-type">Email</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	Lorem ipsum dolor sit amet.&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-assign">&ndash;&gt;-->
+<!--&lt;!&ndash;																		Assigned to Ferdinand M.&ndash;&gt;-->
+<!--&lt;!&ndash;																		<div class="due-date">&ndash;&gt;-->
+<!--&lt;!&ndash;																			due date <span>22 February 2019</span>&ndash;&gt;-->
+<!--&lt;!&ndash;																		</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="custom-control custom-checkbox mb-5"&ndash;&gt;-->
+<!--&lt;!&ndash;																	>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<input&ndash;&gt;-->
+<!--&lt;!&ndash;																			type="checkbox"&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-input"&ndash;&gt;-->
+<!--&lt;!&ndash;																			id="task-3"&ndash;&gt;-->
+<!--&lt;!&ndash;																		/>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<label&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-label"&ndash;&gt;-->
+<!--&lt;!&ndash;																			for="task-3"&ndash;&gt;-->
+<!--&lt;!&ndash;																		></label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-type">Email</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	Lorem ipsum dolor sit amet, consectetur&ndash;&gt;-->
+<!--&lt;!&ndash;																	adipisicing elit.&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-assign">&ndash;&gt;-->
+<!--&lt;!&ndash;																		Assigned to Ferdinand M.&ndash;&gt;-->
+<!--&lt;!&ndash;																		<div class="due-date">&ndash;&gt;-->
+<!--&lt;!&ndash;																			due date <span>22 February 2019</span>&ndash;&gt;-->
+<!--&lt;!&ndash;																		</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="custom-control custom-checkbox mb-5"&ndash;&gt;-->
+<!--&lt;!&ndash;																	>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<input&ndash;&gt;-->
+<!--&lt;!&ndash;																			type="checkbox"&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-input"&ndash;&gt;-->
+<!--&lt;!&ndash;																			id="task-4"&ndash;&gt;-->
+<!--&lt;!&ndash;																		/>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<label&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-label"&ndash;&gt;-->
+<!--&lt;!&ndash;																			for="task-4"&ndash;&gt;-->
+<!--&lt;!&ndash;																		></label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-type">Email</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	Lorem ipsum dolor sit amet. Id ea earum.&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-assign">&ndash;&gt;-->
+<!--&lt;!&ndash;																		Assigned to Ferdinand M.&ndash;&gt;-->
+<!--&lt;!&ndash;																		<div class="due-date">&ndash;&gt;-->
+<!--&lt;!&ndash;																			due date <span>22 February 2019</span>&ndash;&gt;-->
+<!--&lt;!&ndash;																		</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;															</ul>&ndash;&gt;-->
+<!--&lt;!&ndash;														</div>&ndash;&gt;-->
+<!--&lt;!&ndash;														&lt;!&ndash; Open Task End &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;														&lt;!&ndash; Close Task start &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;														<div class="task-title row align-items-center">&ndash;&gt;-->
+<!--&lt;!&ndash;															<div class="col-md-12 col-sm-12">&ndash;&gt;-->
+<!--&lt;!&ndash;																<h5>Closed Tasks</h5>&ndash;&gt;-->
+<!--&lt;!&ndash;															</div>&ndash;&gt;-->
+<!--&lt;!&ndash;														</div>&ndash;&gt;-->
+<!--&lt;!&ndash;														<div class="profile-task-list close-tasks">&ndash;&gt;-->
+<!--&lt;!&ndash;															<ul>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="custom-control custom-checkbox mb-5"&ndash;&gt;-->
+<!--&lt;!&ndash;																	>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<input&ndash;&gt;-->
+<!--&lt;!&ndash;																			type="checkbox"&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-input"&ndash;&gt;-->
+<!--&lt;!&ndash;																			id="task-close-1"&ndash;&gt;-->
+<!--&lt;!&ndash;																			checked=""&ndash;&gt;-->
+<!--&lt;!&ndash;																			disabled=""&ndash;&gt;-->
+<!--&lt;!&ndash;																		/>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<label&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-label"&ndash;&gt;-->
+<!--&lt;!&ndash;																			for="task-close-1"&ndash;&gt;-->
+<!--&lt;!&ndash;																		></label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-type">Email</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	Lorem ipsum dolor sit amet, consectetur&ndash;&gt;-->
+<!--&lt;!&ndash;																	adipisicing elit. Id ea earum.&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-assign">&ndash;&gt;-->
+<!--&lt;!&ndash;																		Assigned to Ferdinand M.&ndash;&gt;-->
+<!--&lt;!&ndash;																		<div class="due-date">&ndash;&gt;-->
+<!--&lt;!&ndash;																			due date <span>22 February 2018</span>&ndash;&gt;-->
+<!--&lt;!&ndash;																		</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="custom-control custom-checkbox mb-5"&ndash;&gt;-->
+<!--&lt;!&ndash;																	>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<input&ndash;&gt;-->
+<!--&lt;!&ndash;																			type="checkbox"&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-input"&ndash;&gt;-->
+<!--&lt;!&ndash;																			id="task-close-2"&ndash;&gt;-->
+<!--&lt;!&ndash;																			checked=""&ndash;&gt;-->
+<!--&lt;!&ndash;																			disabled=""&ndash;&gt;-->
+<!--&lt;!&ndash;																		/>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<label&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-label"&ndash;&gt;-->
+<!--&lt;!&ndash;																			for="task-close-2"&ndash;&gt;-->
+<!--&lt;!&ndash;																		></label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-type">Email</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	Lorem ipsum dolor sit amet.&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-assign">&ndash;&gt;-->
+<!--&lt;!&ndash;																		Assigned to Ferdinand M.&ndash;&gt;-->
+<!--&lt;!&ndash;																		<div class="due-date">&ndash;&gt;-->
+<!--&lt;!&ndash;																			due date <span>22 February 2018</span>&ndash;&gt;-->
+<!--&lt;!&ndash;																		</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="custom-control custom-checkbox mb-5"&ndash;&gt;-->
+<!--&lt;!&ndash;																	>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<input&ndash;&gt;-->
+<!--&lt;!&ndash;																			type="checkbox"&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-input"&ndash;&gt;-->
+<!--&lt;!&ndash;																			id="task-close-3"&ndash;&gt;-->
+<!--&lt;!&ndash;																			checked=""&ndash;&gt;-->
+<!--&lt;!&ndash;																			disabled=""&ndash;&gt;-->
+<!--&lt;!&ndash;																		/>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<label&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-label"&ndash;&gt;-->
+<!--&lt;!&ndash;																			for="task-close-3"&ndash;&gt;-->
+<!--&lt;!&ndash;																		></label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-type">Email</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	Lorem ipsum dolor sit amet, consectetur&ndash;&gt;-->
+<!--&lt;!&ndash;																	adipisicing elit.&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-assign">&ndash;&gt;-->
+<!--&lt;!&ndash;																		Assigned to Ferdinand M.&ndash;&gt;-->
+<!--&lt;!&ndash;																		<div class="due-date">&ndash;&gt;-->
+<!--&lt;!&ndash;																			due date <span>22 February 2018</span>&ndash;&gt;-->
+<!--&lt;!&ndash;																		</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="custom-control custom-checkbox mb-5"&ndash;&gt;-->
+<!--&lt;!&ndash;																	>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<input&ndash;&gt;-->
+<!--&lt;!&ndash;																			type="checkbox"&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-input"&ndash;&gt;-->
+<!--&lt;!&ndash;																			id="task-close-4"&ndash;&gt;-->
+<!--&lt;!&ndash;																			checked=""&ndash;&gt;-->
+<!--&lt;!&ndash;																			disabled=""&ndash;&gt;-->
+<!--&lt;!&ndash;																		/>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<label&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-label"&ndash;&gt;-->
+<!--&lt;!&ndash;																			for="task-close-4"&ndash;&gt;-->
+<!--&lt;!&ndash;																		></label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-type">Email</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	Lorem ipsum dolor sit amet. Id ea earum.&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="task-assign">&ndash;&gt;-->
+<!--&lt;!&ndash;																		Assigned to Ferdinand M.&ndash;&gt;-->
+<!--&lt;!&ndash;																		<div class="due-date">&ndash;&gt;-->
+<!--&lt;!&ndash;																			due date <span>22 February 2018</span>&ndash;&gt;-->
+<!--&lt;!&ndash;																		</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</li>&ndash;&gt;-->
+<!--&lt;!&ndash;															</ul>&ndash;&gt;-->
+<!--&lt;!&ndash;														</div>&ndash;&gt;-->
+<!--&lt;!&ndash;														&lt;!&ndash; Close Task start &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;														&lt;!&ndash; add task popup start &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;														<div&ndash;&gt;-->
+<!--&lt;!&ndash;															class="modal fade customscroll"&ndash;&gt;-->
+<!--&lt;!&ndash;															id="task-add"&ndash;&gt;-->
+<!--&lt;!&ndash;															tabindex="-1"&ndash;&gt;-->
+<!--&lt;!&ndash;															role="dialog"&ndash;&gt;-->
+<!--&lt;!&ndash;														>&ndash;&gt;-->
+<!--&lt;!&ndash;															<div&ndash;&gt;-->
+<!--&lt;!&ndash;																class="modal-dialog modal-dialog-centered"&ndash;&gt;-->
+<!--&lt;!&ndash;																role="document"&ndash;&gt;-->
+<!--&lt;!&ndash;															>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="modal-content">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="modal-header">&ndash;&gt;-->
+<!--&lt;!&ndash;																		<h5&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="modal-title"&ndash;&gt;-->
+<!--&lt;!&ndash;																			id="exampleModalLongTitle"&ndash;&gt;-->
+<!--&lt;!&ndash;																		>&ndash;&gt;-->
+<!--&lt;!&ndash;																			Tasks Add&ndash;&gt;-->
+<!--&lt;!&ndash;																		</h5>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<button&ndash;&gt;-->
+<!--&lt;!&ndash;																			type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="close"&ndash;&gt;-->
+<!--&lt;!&ndash;																			data-dismiss="modal"&ndash;&gt;-->
+<!--&lt;!&ndash;																			aria-label="Close"&ndash;&gt;-->
+<!--&lt;!&ndash;																			data-toggle="tooltip"&ndash;&gt;-->
+<!--&lt;!&ndash;																			data-placement="bottom"&ndash;&gt;-->
+<!--&lt;!&ndash;																			title=""&ndash;&gt;-->
+<!--&lt;!&ndash;																			data-original-title="Close Modal"&ndash;&gt;-->
+<!--&lt;!&ndash;																		>&ndash;&gt;-->
+<!--&lt;!&ndash;																			<span aria-hidden="true">&times;</span>&ndash;&gt;-->
+<!--&lt;!&ndash;																		</button>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="modal-body pd-0">&ndash;&gt;-->
+<!--&lt;!&ndash;																		<div class="task-list-form">&ndash;&gt;-->
+<!--&lt;!&ndash;																			<ul>&ndash;&gt;-->
+<!--&lt;!&ndash;																				<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																					<form>&ndash;&gt;-->
+<!--&lt;!&ndash;																						<div class="form-group row">&ndash;&gt;-->
+<!--&lt;!&ndash;																							<label class="col-md-4"&ndash;&gt;-->
+<!--&lt;!&ndash;																								>Task Type</label&ndash;&gt;-->
+<!--&lt;!&ndash;																							>&ndash;&gt;-->
+<!--&lt;!&ndash;																							<div class="col-md-8">&ndash;&gt;-->
+<!--&lt;!&ndash;																								<input&ndash;&gt;-->
+<!--&lt;!&ndash;																									type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																									class="form-control"&ndash;&gt;-->
+<!--&lt;!&ndash;																								/>&ndash;&gt;-->
+<!--&lt;!&ndash;																							</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						<div class="form-group row">&ndash;&gt;-->
+<!--&lt;!&ndash;																							<label class="col-md-4"&ndash;&gt;-->
+<!--&lt;!&ndash;																								>Task Message</label&ndash;&gt;-->
+<!--&lt;!&ndash;																							>&ndash;&gt;-->
+<!--&lt;!&ndash;																							<div class="col-md-8">&ndash;&gt;-->
+<!--&lt;!&ndash;																								<textarea&ndash;&gt;-->
+<!--&lt;!&ndash;																									class="form-control"&ndash;&gt;-->
+<!--&lt;!&ndash;																								></textarea>&ndash;&gt;-->
+<!--&lt;!&ndash;																							</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						<div class="form-group row">&ndash;&gt;-->
+<!--&lt;!&ndash;																							<label class="col-md-4"&ndash;&gt;-->
+<!--&lt;!&ndash;																								>Assigned to</label&ndash;&gt;-->
+<!--&lt;!&ndash;																							>&ndash;&gt;-->
+<!--&lt;!&ndash;																							<div class="col-md-8">&ndash;&gt;-->
+<!--&lt;!&ndash;																								<select&ndash;&gt;-->
+<!--&lt;!&ndash;																									class="selectpicker form-control"&ndash;&gt;-->
+<!--&lt;!&ndash;																									data-style="btn-outline-primary"&ndash;&gt;-->
+<!--&lt;!&ndash;																									title="Not Chosen"&ndash;&gt;-->
+<!--&lt;!&ndash;																									multiple=""&ndash;&gt;-->
+<!--&lt;!&ndash;																									data-selected-text-format="count"&ndash;&gt;-->
+<!--&lt;!&ndash;																									data-count-selected-text="{0} people selected"&ndash;&gt;-->
+<!--&lt;!&ndash;																								>&ndash;&gt;-->
+<!--&lt;!&ndash;																									<option>Ferdinand M.</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																									<option>Don H. Rabon</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																									<option>Ann P. Harris</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																									<option>&ndash;&gt;-->
+<!--&lt;!&ndash;																										Katie D. Verdin&ndash;&gt;-->
+<!--&lt;!&ndash;																									</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																									<option>&ndash;&gt;-->
+<!--&lt;!&ndash;																										Christopher S. Fulghum&ndash;&gt;-->
+<!--&lt;!&ndash;																									</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																									<option>&ndash;&gt;-->
+<!--&lt;!&ndash;																										Matthew C. Porter&ndash;&gt;-->
+<!--&lt;!&ndash;																									</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																								</select>&ndash;&gt;-->
+<!--&lt;!&ndash;																							</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						<div class="form-group row mb-0">&ndash;&gt;-->
+<!--&lt;!&ndash;																							<label class="col-md-4"&ndash;&gt;-->
+<!--&lt;!&ndash;																								>Due Date</label&ndash;&gt;-->
+<!--&lt;!&ndash;																							>&ndash;&gt;-->
+<!--&lt;!&ndash;																							<div class="col-md-8">&ndash;&gt;-->
+<!--&lt;!&ndash;																								<input&ndash;&gt;-->
+<!--&lt;!&ndash;																									type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																									class="form-control date-picker"&ndash;&gt;-->
+<!--&lt;!&ndash;																								/>&ndash;&gt;-->
+<!--&lt;!&ndash;																							</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																					</form>&ndash;&gt;-->
+<!--&lt;!&ndash;																				</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																				<li>&ndash;&gt;-->
+<!--&lt;!&ndash;																					<a&ndash;&gt;-->
+<!--&lt;!&ndash;																						href="javascript:;"&ndash;&gt;-->
+<!--&lt;!&ndash;																						class="remove-task"&ndash;&gt;-->
+<!--&lt;!&ndash;																						data-toggle="tooltip"&ndash;&gt;-->
+<!--&lt;!&ndash;																						data-placement="bottom"&ndash;&gt;-->
+<!--&lt;!&ndash;																						title=""&ndash;&gt;-->
+<!--&lt;!&ndash;																						data-original-title="Remove Task"&ndash;&gt;-->
+<!--&lt;!&ndash;																						><i class="ion-minus-circled"></i&ndash;&gt;-->
+<!--&lt;!&ndash;																					></a>&ndash;&gt;-->
+<!--&lt;!&ndash;																					<form>&ndash;&gt;-->
+<!--&lt;!&ndash;																						<div class="form-group row">&ndash;&gt;-->
+<!--&lt;!&ndash;																							<label class="col-md-4"&ndash;&gt;-->
+<!--&lt;!&ndash;																								>Task Type</label&ndash;&gt;-->
+<!--&lt;!&ndash;																							>&ndash;&gt;-->
+<!--&lt;!&ndash;																							<div class="col-md-8">&ndash;&gt;-->
+<!--&lt;!&ndash;																								<input&ndash;&gt;-->
+<!--&lt;!&ndash;																									type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																									class="form-control"&ndash;&gt;-->
+<!--&lt;!&ndash;																								/>&ndash;&gt;-->
+<!--&lt;!&ndash;																							</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						<div class="form-group row">&ndash;&gt;-->
+<!--&lt;!&ndash;																							<label class="col-md-4"&ndash;&gt;-->
+<!--&lt;!&ndash;																								>Task Message</label&ndash;&gt;-->
+<!--&lt;!&ndash;																							>&ndash;&gt;-->
+<!--&lt;!&ndash;																							<div class="col-md-8">&ndash;&gt;-->
+<!--&lt;!&ndash;																								<textarea&ndash;&gt;-->
+<!--&lt;!&ndash;																									class="form-control"&ndash;&gt;-->
+<!--&lt;!&ndash;																								></textarea>&ndash;&gt;-->
+<!--&lt;!&ndash;																							</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						<div class="form-group row">&ndash;&gt;-->
+<!--&lt;!&ndash;																							<label class="col-md-4"&ndash;&gt;-->
+<!--&lt;!&ndash;																								>Assigned to</label&ndash;&gt;-->
+<!--&lt;!&ndash;																							>&ndash;&gt;-->
+<!--&lt;!&ndash;																							<div class="col-md-8">&ndash;&gt;-->
+<!--&lt;!&ndash;																								<select&ndash;&gt;-->
+<!--&lt;!&ndash;																									class="selectpicker form-control"&ndash;&gt;-->
+<!--&lt;!&ndash;																									data-style="btn-outline-primary"&ndash;&gt;-->
+<!--&lt;!&ndash;																									title="Not Chosen"&ndash;&gt;-->
+<!--&lt;!&ndash;																									multiple=""&ndash;&gt;-->
+<!--&lt;!&ndash;																									data-selected-text-format="count"&ndash;&gt;-->
+<!--&lt;!&ndash;																									data-count-selected-text="{0} people selected"&ndash;&gt;-->
+<!--&lt;!&ndash;																								>&ndash;&gt;-->
+<!--&lt;!&ndash;																									<option>Ferdinand M.</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																									<option>Don H. Rabon</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																									<option>Ann P. Harris</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																									<option>&ndash;&gt;-->
+<!--&lt;!&ndash;																										Katie D. Verdin&ndash;&gt;-->
+<!--&lt;!&ndash;																									</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																									<option>&ndash;&gt;-->
+<!--&lt;!&ndash;																										Christopher S. Fulghum&ndash;&gt;-->
+<!--&lt;!&ndash;																									</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																									<option>&ndash;&gt;-->
+<!--&lt;!&ndash;																										Matthew C. Porter&ndash;&gt;-->
+<!--&lt;!&ndash;																									</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																								</select>&ndash;&gt;-->
+<!--&lt;!&ndash;																							</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						<div class="form-group row mb-0">&ndash;&gt;-->
+<!--&lt;!&ndash;																							<label class="col-md-4"&ndash;&gt;-->
+<!--&lt;!&ndash;																								>Due Date</label&ndash;&gt;-->
+<!--&lt;!&ndash;																							>&ndash;&gt;-->
+<!--&lt;!&ndash;																							<div class="col-md-8">&ndash;&gt;-->
+<!--&lt;!&ndash;																								<input&ndash;&gt;-->
+<!--&lt;!&ndash;																									type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																									class="form-control date-picker"&ndash;&gt;-->
+<!--&lt;!&ndash;																								/>&ndash;&gt;-->
+<!--&lt;!&ndash;																							</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																						</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																					</form>&ndash;&gt;-->
+<!--&lt;!&ndash;																				</li>&ndash;&gt;-->
+<!--&lt;!&ndash;																			</ul>&ndash;&gt;-->
+<!--&lt;!&ndash;																		</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<div class="add-more-task">&ndash;&gt;-->
+<!--&lt;!&ndash;																			<a&ndash;&gt;-->
+<!--&lt;!&ndash;																				href="#"&ndash;&gt;-->
+<!--&lt;!&ndash;																				data-toggle="tooltip"&ndash;&gt;-->
+<!--&lt;!&ndash;																				data-placement="bottom"&ndash;&gt;-->
+<!--&lt;!&ndash;																				title=""&ndash;&gt;-->
+<!--&lt;!&ndash;																				data-original-title="Add Task"&ndash;&gt;-->
+<!--&lt;!&ndash;																				><i class="ion-plus-circled"></i> Add&ndash;&gt;-->
+<!--&lt;!&ndash;																				More Task</a&ndash;&gt;-->
+<!--&lt;!&ndash;																			>&ndash;&gt;-->
+<!--&lt;!&ndash;																		</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="modal-footer">&ndash;&gt;-->
+<!--&lt;!&ndash;																		<button&ndash;&gt;-->
+<!--&lt;!&ndash;																			type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="btn btn-primary"&ndash;&gt;-->
+<!--&lt;!&ndash;																		>&ndash;&gt;-->
+<!--&lt;!&ndash;																			Add&ndash;&gt;-->
+<!--&lt;!&ndash;																		</button>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<button&ndash;&gt;-->
+<!--&lt;!&ndash;																			type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="btn btn-secondary"&ndash;&gt;-->
+<!--&lt;!&ndash;																			data-dismiss="modal"&ndash;&gt;-->
+<!--&lt;!&ndash;																		>&ndash;&gt;-->
+<!--&lt;!&ndash;																			Close&ndash;&gt;-->
+<!--&lt;!&ndash;																		</button>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;															</div>&ndash;&gt;-->
+<!--&lt;!&ndash;														</div>&ndash;&gt;-->
+<!--&lt;!&ndash;														&lt;!&ndash; add task popup End &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;													</div>&ndash;&gt;-->
+<!--&lt;!&ndash;												</div>&ndash;&gt;-->
+<!--&lt;!&ndash;											</div>&ndash;&gt;-->
+<!--&lt;!&ndash;											&lt;!&ndash; Tasks Tab End &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;											&lt;!&ndash; Setting Tab start &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;											<div&ndash;&gt;-->
+<!--&lt;!&ndash;												class="tab-pane fade height-100-p"&ndash;&gt;-->
+<!--&lt;!&ndash;												id="setting"&ndash;&gt;-->
+<!--&lt;!&ndash;												role="tabpanel"&ndash;&gt;-->
+<!--&lt;!&ndash;											>&ndash;&gt;-->
+<!--&lt;!&ndash;												<div class="profile-setting">&ndash;&gt;-->
+<!--&lt;!&ndash;													<form>&ndash;&gt;-->
+<!--&lt;!&ndash;														<ul class="profile-edit-list row">&ndash;&gt;-->
+<!--&lt;!&ndash;															<li class="weight-500 col-md-6">&ndash;&gt;-->
+<!--&lt;!&ndash;																<h4 class="text-blue h5 mb-20">&ndash;&gt;-->
+<!--&lt;!&ndash;																	Edit Your Personal Setting&ndash;&gt;-->
+<!--&lt;!&ndash;																</h4>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Full Name</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Title</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Email</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="email"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Date of birth</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg date-picker"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Gender</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div class="d-flex">&ndash;&gt;-->
+<!--&lt;!&ndash;																		<div&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control custom-radio mb-5 mr-20"&ndash;&gt;-->
+<!--&lt;!&ndash;																		>&ndash;&gt;-->
+<!--&lt;!&ndash;																			<input&ndash;&gt;-->
+<!--&lt;!&ndash;																				type="radio"&ndash;&gt;-->
+<!--&lt;!&ndash;																				id="customRadio4"&ndash;&gt;-->
+<!--&lt;!&ndash;																				name="customRadio"&ndash;&gt;-->
+<!--&lt;!&ndash;																				class="custom-control-input"&ndash;&gt;-->
+<!--&lt;!&ndash;																			/>&ndash;&gt;-->
+<!--&lt;!&ndash;																			<label&ndash;&gt;-->
+<!--&lt;!&ndash;																				class="custom-control-label weight-400"&ndash;&gt;-->
+<!--&lt;!&ndash;																				for="customRadio4"&ndash;&gt;-->
+<!--&lt;!&ndash;																				>Male</label&ndash;&gt;-->
+<!--&lt;!&ndash;																			>&ndash;&gt;-->
+<!--&lt;!&ndash;																		</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<div&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control custom-radio mb-5"&ndash;&gt;-->
+<!--&lt;!&ndash;																		>&ndash;&gt;-->
+<!--&lt;!&ndash;																			<input&ndash;&gt;-->
+<!--&lt;!&ndash;																				type="radio"&ndash;&gt;-->
+<!--&lt;!&ndash;																				id="customRadio5"&ndash;&gt;-->
+<!--&lt;!&ndash;																				name="customRadio"&ndash;&gt;-->
+<!--&lt;!&ndash;																				class="custom-control-input"&ndash;&gt;-->
+<!--&lt;!&ndash;																			/>&ndash;&gt;-->
+<!--&lt;!&ndash;																			<label&ndash;&gt;-->
+<!--&lt;!&ndash;																				class="custom-control-label weight-400"&ndash;&gt;-->
+<!--&lt;!&ndash;																				for="customRadio5"&ndash;&gt;-->
+<!--&lt;!&ndash;																				>Female</label&ndash;&gt;-->
+<!--&lt;!&ndash;																			>&ndash;&gt;-->
+<!--&lt;!&ndash;																		</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Country</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<select&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="selectpicker form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		data-style="btn-outline-secondary btn-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		title="Not Chosen"&ndash;&gt;-->
+<!--&lt;!&ndash;																	>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<option>United States</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<option>India</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<option>United Kingdom</option>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</select>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>State/Province/Region</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Postal Code</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Phone Number</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Address</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<textarea class="form-control"></textarea>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Visa Card Number</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Paypal ID</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<div&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="custom-control custom-checkbox mb-5"&ndash;&gt;-->
+<!--&lt;!&ndash;																	>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<input&ndash;&gt;-->
+<!--&lt;!&ndash;																			type="checkbox"&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-input"&ndash;&gt;-->
+<!--&lt;!&ndash;																			id="customCheck1-1"&ndash;&gt;-->
+<!--&lt;!&ndash;																		/>&ndash;&gt;-->
+<!--&lt;!&ndash;																		<label&ndash;&gt;-->
+<!--&lt;!&ndash;																			class="custom-control-label weight-400"&ndash;&gt;-->
+<!--&lt;!&ndash;																			for="customCheck1-1"&ndash;&gt;-->
+<!--&lt;!&ndash;																			>I agree to receive notification&ndash;&gt;-->
+<!--&lt;!&ndash;																			emails</label&ndash;&gt;-->
+<!--&lt;!&ndash;																		>&ndash;&gt;-->
+<!--&lt;!&ndash;																	</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group mb-0">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="submit"&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="btn btn-primary"&ndash;&gt;-->
+<!--&lt;!&ndash;																		value="Update Information"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;															</li>&ndash;&gt;-->
+<!--&lt;!&ndash;															<li class="weight-500 col-md-6">&ndash;&gt;-->
+<!--&lt;!&ndash;																<h4 class="text-blue h5 mb-20">&ndash;&gt;-->
+<!--&lt;!&ndash;																	Edit Social Media links&ndash;&gt;-->
+<!--&lt;!&ndash;																</h4>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Facebook URL:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																		placeholder="Paste your link here"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Twitter URL:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																		placeholder="Paste your link here"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Linkedin URL:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																		placeholder="Paste your link here"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Instagram URL:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																		placeholder="Paste your link here"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Dribbble URL:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																		placeholder="Paste your link here"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Dropbox URL:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																		placeholder="Paste your link here"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Google-plus URL:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																		placeholder="Paste your link here"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Pinterest URL:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																		placeholder="Paste your link here"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Skype URL:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																		placeholder="Paste your link here"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<label>Vine URL:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;																		placeholder="Paste your link here"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;																<div class="form-group mb-0">&ndash;&gt;-->
+<!--&lt;!&ndash;																	<input&ndash;&gt;-->
+<!--&lt;!&ndash;																		type="submit"&ndash;&gt;-->
+<!--&lt;!&ndash;																		class="btn btn-primary"&ndash;&gt;-->
+<!--&lt;!&ndash;																		value="Save & Update"&ndash;&gt;-->
+<!--&lt;!&ndash;																	/>&ndash;&gt;-->
+<!--&lt;!&ndash;																</div>&ndash;&gt;-->
+<!--&lt;!&ndash;															</li>&ndash;&gt;-->
+<!--&lt;!&ndash;														</ul>&ndash;&gt;-->
+<!--&lt;!&ndash;													</form>&ndash;&gt;-->
+<!--&lt;!&ndash;												</div>&ndash;&gt;-->
+<!--&lt;!&ndash;											</div>&ndash;&gt;-->
+<!--&lt;!&ndash;											&lt;!&ndash; Setting Tab End &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;										</div>&ndash;&gt;-->
+<!--									</div>-->
+<!--								</div>-->
+<!--							</div>-->
+<!--						</div>-->
 					</div>
 				</div>
-				<div class="footer-wrap pd-20 mb-20 card-box">
-					DeskApp - Bootstrap 4 Admin Template By
-					<a href="https://github.com/dropways" target="_blank"
-						>Ankit Hingarajiya</a
-					>
-				</div>
+<!--				<div class="footer-wrap pd-20 mb-20 card-box">-->
+<!--					DeskApp - Bootstrap 4 Admin Template By-->
+<!--					<a href="https://github.com/dropways" target="_blank"-->
+<!--						>Ankit Hingarajiya</a-->
+<!--					>-->
+<!--				</div>-->
 			</div>
 		</div>
-		<!-- welcome modal start -->
-		<div class="welcome-modal">
-			<button class="welcome-modal-close">
-				<i class="bi bi-x-lg"></i>
-			</button>
-			<iframe
-				class="w-100 border-0"
-				src="https://embed.lottiefiles.com/animation/31548"
-			></iframe>
-			<div class="text-center">
-				<h3 class="h5 weight-500 text-center mb-2">
-					Open source
-					<span role="img" aria-label="gratitude">❤️</span>
-				</h3>
-				<div class="pb-2">
-					<a
-						class="github-button"
-						href="https://github.com/dropways/deskapp"
-						data-color-scheme="no-preference: dark; light: light; dark: light;"
-						data-icon="octicon-star"
-						data-size="large"
-						data-show-count="true"
-						aria-label="Star dropways/deskapp dashboard on GitHub"
-						>Star</a
-					>
-					<a
-						class="github-button"
-						href="https://github.com/dropways/deskapp/fork"
-						data-color-scheme="no-preference: dark; light: light; dark: light;"
-						data-icon="octicon-repo-forked"
-						data-size="large"
-						data-show-count="true"
-						aria-label="Fork dropways/deskapp dashboard on GitHub"
-						>Fork</a
-					>
-				</div>
-			</div>
-			<div class="text-center mb-1">
-				<div>
-					<a
-						href="https://github.com/dropways/deskapp"
-						target="_blank"
-						class="btn btn-light btn-block btn-sm"
-					>
-						<span class="text-danger weight-600">STAR US</span>
-						<span class="weight-600">ON GITHUB</span>
-						<i class="fa fa-github"></i>
-					</a>
-				</div>
-				<script
-					async
-					defer="defer"
-					src="https://buttons.github.io/buttons.js"
-				></script>
-			</div>
-			<a
-				href="https://github.com/dropways/deskapp"
-				target="_blank"
-				class="btn btn-success btn-sm mb-0 mb-md-3 w-100"
-			>
-				정보 수정
-				<i class="fa fa-download"></i>
-			</a>
-			<p class="font-14 text-center mb-1 d-none d-md-block">
-				Available in the following technologies:
-			</p>
-			<div class="d-none d-md-flex justify-content-center h1 mb-0 text-danger">
-				<i class="fa fa-html5"></i>
-			</div>
-		</div>
-		<button class="welcome-modal-btn">
-			<i class="fa fa-download"></i> Download
-		</button>
-		<!-- welcome modal end -->
+<!--		&lt;!&ndash; welcome modal start &ndash;&gt;-->
+<!--		<div class="welcome-modal">-->
+<!--			<button class="welcome-modal-close">-->
+<!--				<i class="bi bi-x-lg"></i>-->
+<!--			</button>-->
+<!--			<iframe-->
+<!--				class="w-100 border-0"-->
+<!--				src="https://embed.lottiefiles.com/animation/31548"-->
+<!--			></iframe>-->
+<!--			<div class="text-center">-->
+<!--				<h3 class="h5 weight-500 text-center mb-2">-->
+<!--					Open source-->
+<!--					<span role="img" aria-label="gratitude">❤️</span>-->
+<!--				</h3>-->
+<!--				<div class="pb-2">-->
+<!--					<a-->
+<!--						class="github-button"-->
+<!--						href="https://github.com/dropways/deskapp"-->
+<!--						data-color-scheme="no-preference: dark; light: light; dark: light;"-->
+<!--						data-icon="octicon-star"-->
+<!--						data-size="large"-->
+<!--						data-show-count="true"-->
+<!--						aria-label="Star dropways/deskapp dashboard on GitHub"-->
+<!--						>Star</a-->
+<!--					>-->
+<!--					<a-->
+<!--						class="github-button"-->
+<!--						href="https://github.com/dropways/deskapp/fork"-->
+<!--						data-color-scheme="no-preference: dark; light: light; dark: light;"-->
+<!--						data-icon="octicon-repo-forked"-->
+<!--						data-size="large"-->
+<!--						data-show-count="true"-->
+<!--						aria-label="Fork dropways/deskapp dashboard on GitHub"-->
+<!--						>Fork</a-->
+<!--					>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="text-center mb-1">-->
+<!--				<div>-->
+<!--					<a-->
+<!--						href="https://github.com/dropways/deskapp"-->
+<!--						target="_blank"-->
+<!--						class="btn btn-light btn-block btn-sm"-->
+<!--					>-->
+<!--						<span class="text-danger weight-600">STAR US</span>-->
+<!--						<span class="weight-600">ON GITHUB</span>-->
+<!--						<i class="fa fa-github"></i>-->
+<!--					</a>-->
+<!--				</div>-->
+<!--				<script-->
+<!--					async-->
+<!--					defer="defer"-->
+<!--					src="https://buttons.github.io/buttons.js"-->
+<!--				></script>-->
+<!--			</div>-->
+<!--			<a-->
+<!--				href="https://github.com/dropways/deskapp"-->
+<!--				target="_blank"-->
+<!--				class="btn btn-success btn-sm mb-0 mb-md-3 w-100"-->
+<!--			>-->
+<!--				정보 수정-->
+<!--				<i class="fa fa-download"></i>-->
+<!--			</a>-->
+<!--			<p class="font-14 text-center mb-1 d-none d-md-block">-->
+<!--				Available in the following technologies:-->
+<!--			</p>-->
+<!--			<div class="d-none d-md-flex justify-content-center h1 mb-0 text-danger">-->
+<!--				<i class="fa fa-html5"></i>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--		<button class="welcome-modal-btn">-->
+<!--			<i class="fa fa-download"></i> Download-->
+<!--		</button>-->
+<!--		&lt;!&ndash; welcome modal end &ndash;&gt;-->
 		<!-- js -->
 		<script src="../vendors/scripts/core.js"></script>
 		<script src="../vendors/scripts/script.min.js"></script>

@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BlogRepository extends JpaRepository<BlogEntity, Long> { // interface 상속,
     Page<BlogEntity> findByTitleContaining(String title, Pageable pageable);
+
+    void deleteByBloggerIdx(Long bloggerIdx);
 }
