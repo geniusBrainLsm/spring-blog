@@ -34,6 +34,7 @@ public class BlogServiceImpl implements BlogService {
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .writerIdx(member.getIdx())
+                .writerName(member.getName())
                 .block("non")
                 .build();
 

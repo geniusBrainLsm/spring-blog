@@ -45,6 +45,10 @@ public class BlogController {
     @GetMapping("/blogs/{idx}")
     public String getBlogById(@PathVariable("idx") Long idx, Model model) {
         BlogDto blogDto = blogService.read(idx);
+        MemberDto writer = memberService.readByIdx(blogDto.getWriterIdx());
+        if (writer != null) {
+            blogDto.setWriterName(writer.getName());
+        }
         model.addAttribute("blogDto", blogDto);
         return "./blogs/detail";
     }
