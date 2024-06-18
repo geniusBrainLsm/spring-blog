@@ -68,7 +68,7 @@ public class BlogServiceTest {
 
     @Test
     public void UpdateBlog(){
-        int blogIdx=2;
+        Long blogIdx=2L;
 
         BlogDto blogDto = BlogDto.builder()
                 .idx((long)blogIdx)
@@ -77,7 +77,7 @@ public class BlogServiceTest {
                 .writerIdx((long)3)
                 .build();
 
-        blogService.update(blogDto);
+        blogService.update(blogIdx, blogDto);
         getBlogs();
     }
 
@@ -93,12 +93,12 @@ public class BlogServiceTest {
     }
     @Test
     public void deleteBlog() {
-        int blogIdx = 12;
+        long blogIdx = 12L;
         BlogDto blogDto = BlogDto.builder()
                 .idx((long)blogIdx)
                 .build();
 
-        blogService.delete(blogDto);
+        blogService.delete(blogIdx);
         getBlogs();
 
     }

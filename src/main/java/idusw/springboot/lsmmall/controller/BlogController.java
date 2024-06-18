@@ -1,24 +1,25 @@
 package idusw.springboot.lsmmall.controller;
 
 import idusw.springboot.lsmmall.model.BlogDto;
+import idusw.springboot.lsmmall.model.MemberDto;
 import idusw.springboot.lsmmall.serivce.BlogService;
+import idusw.springboot.lsmmall.serivce.MemberServiceImpl;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequiredArgsConstructor
 public class BlogController {
 
     private final BlogService blogService;
+    private final MemberServiceImpl memberService;
 
-    public BlogController(BlogService blogService) {
-        this.blogService = blogService;
-    }
 
     @GetMapping("/blogs")
     public String getBlogs(Model model,
@@ -49,9 +50,47 @@ public class BlogController {
     }
 
     @GetMapping("/blogs/edit/{idx}")
-    public String addBlogs(@PathVariable("idx") Long idx, Model model){
+    public String getEditBlogs(@PathVariable("idx") Long idx, Model model){
         BlogDto blogDto = blogService.read(idx);
         model.addAttribute("blogDto", blogDto);
         return "./blogs/edit";
+    }
+
+    @PostMapping("/blogs/edit/{idx}")
+    public String postEditBlogs(@PathVariable("idx") Long idx, @ModelAttribute BlogDto blogDto) {
+        int result = blogService.update(idx, blogDto);
+        if (result == 1) {
+            return "redirect:/blogs/" + idx;
+        } else {
+            //dㅔ러
+            return "redirect:/blogs";
+        }
+    }
+
+    @PostMapping("/blogs/delete/{idx}")
+    public String deleteBlog(@PathVariable("idx") Long idx) {
+        blogService.delete(idx);
+        return "redirect:/blogs";
+    }
+
+    @GetMapping("/blogs/create")
+    public String getCreateBlog(){
+        return "./blogs/create";
+    }
+
+    @PostMapping("/blogs/create")
+    public String postCreateBlog(@ModelAttribute BlogDto blogDto, HttpSession session) {
+        Long memberIdx = (Long) session.getAttribute("idx");
+        if (memberIdx == null) {
+            return "redirect:/members/login";
+        }
+
+        MemberDto memberDto = memberService.readByIdx(memberIdx);
+        if (memberDto == null) {
+            return "./errors/error-message";
+        }
+
+        blogService.create(memberDto, blogDto);
+        return "redirect:/blogs";
     }
 }

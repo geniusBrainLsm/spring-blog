@@ -3,7 +3,7 @@
 <head>
 	<!-- Basic Page Info -->
 	<meta charset="utf-8" />
-	<title>Blog Edit</title>
+	<title>Create Blog</title>
 	<div th:replace="~{/main/fragments :: head}"></div>
 </head>
 <body>
@@ -18,16 +18,18 @@
 				<div class="row">
 					<div class="col-md-12 col-sm-12">
 						<div class="title">
-							<h4>Edit Blog Detail</h4>
+							<h4>Create Blog</h4>
 						</div>
+
 						<nav aria-label="breadcrumb" role="navigation">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item">
 									<a href="/">Home</a>
 								</li>
 								<li class="breadcrumb-item active" aria-current="page">
-									Blog Edit
+									Create Blog
 								</li>
+
 							</ol>
 						</nav>
 					</div>
@@ -42,33 +44,20 @@
 									<img src="../../vendors/images/img2.jpg" alt="" />
 								</div>
 								<div class="blog-caption">
-									<form th:action="@{/blogs/edit/{idx}(idx=${blogDto.idx})}" method="post">
+									<form th:action="@{/blogs/create}" method="post">
 										<div class="mb-3">
 											<label for="title" class="form-label">Title</label>
-											<input type="text" class="form-control" id="title" name="title" th:value="${blogDto.title}">
+											<input type="text" class="form-control" id="title" name="title">
 										</div>
-										<p>
-											작성자:
-											<span th:text="${blogDto.getWriterName()}"></span>
-										</p>
-										<p>
-											조회수:
-											<span th:text="${blogDto.getViews()}"></span>
-										</p>
+
 										<div class="mb-3">
 											<label for="content" class="form-label">Content</label>
-											<textarea class="form-control" id="content" name="content" rows="10" th:text="${blogDto.content}"></textarea>
+											<textarea class="form-control" id="content" name="content" rows="10"></textarea>
 										</div>
 										<div class="mt-3">
-											<button type="submit" class="btn btn-primary">수정하기</button>
+											<button type="submit" class="btn btn-primary">작성하기</button>
 										</div>
 									</form>
-									<div class="mt-3">
-										<form th:action="@{/blogs/delete/{idx}(idx=${blogDto.idx})}" method="post" style="display: inline;">
-											<input type="hidden" name="_method" value="post">
-											<button type="submit" class="btn btn-danger">삭제하기</button>
-										</form>
-									</div>
 								</div>
 							</div>
 						</div>

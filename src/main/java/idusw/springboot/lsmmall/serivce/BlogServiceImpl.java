@@ -3,6 +3,7 @@ package idusw.springboot.lsmmall.serivce;
 import idusw.springboot.lsmmall.entity.BlogEntity;
 import idusw.springboot.lsmmall.entity.MemberEntity;
 import idusw.springboot.lsmmall.model.BlogDto;
+import idusw.springboot.lsmmall.model.MemberDto;
 import idusw.springboot.lsmmall.repository.BlogRepository;
 import idusw.springboot.lsmmall.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,11 +22,23 @@ public class BlogServiceImpl implements BlogService {
 
     private final BlogRepository blogRepository;
     private final MemberRepository memberRepository;
+    private final MemberServiceImpl memberService;
     @Override
-    public int create(BlogDto dto) {
-        BlogEntity entity = dtoToEntity(dto);
+    public int create(MemberDto memberDto, BlogDto dto) {
+        MemberDto member = memberService.readByIdx(memberDto.getIdx());
+        if (member == null) {
+            throw new IllegalArgumentException("Member not found with id: " + memberDto.getIdx());
+        }
 
-        blogRepository.save(entity);
+        BlogDto blogDto = BlogDto.builder()
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .writerIdx(member.getIdx())
+                .block("non")
+                .build();
+
+
+        blogRepository.save(dtoToEntity(blogDto));
         return 1;
     }
 
@@ -58,16 +72,27 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public int update(BlogDto dto) {
-        blogRepository.save(dtoToEntity(dto));
-        return 1;
+    public int update(Long idx, BlogDto dto) {
+        Optional<BlogEntity> optionalBlogEntity = blogRepository.findById(idx);
+
+        if (optionalBlogEntity.isPresent()) {
+            BlogEntity blogEntity = optionalBlogEntity.get();
+            blogEntity.setTitle(dto.getTitle());
+            blogEntity.setContent(dto.getContent());
+            blogRepository.save(blogEntity);
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     @Override
-    public int delete(BlogDto dto) {
-        blogRepository.delete(dtoToEntity(dto));
-
-
-        return 1;
+    public int delete(Long idx) {
+        if (blogRepository.existsById(idx)) {
+            blogRepository.deleteById(idx);
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }
